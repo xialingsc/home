@@ -30,7 +30,7 @@ limit: 25
     <id>{{ base }}{{ post.id }}</id>
     <author>
       <name>{{ site.owner.name | xml_escape }}</name>
-      <uri>{{ site.url }}/home/</uri>
+      <uri>{{ site.url }}/</uri>
       {% if site.owner.email %}<email>{{ site.owner.email }}</email>{% endif %}
     </author>
     <content type="html">
