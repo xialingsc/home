@@ -1,0 +1,25 @@
+# Site navigation links
+
+- title:首页
+  url:/
+  excerpt:
+  image:
+
+- title:Mac
+  url:/mac/
+
+- title:Linux
+  url:/linux/
+
+- title:Docker
+  url:/docker/
+
+- title:Go
+  url:/go/
+
+- title:Shell
+  url:/shell/
+
+- title:Contact Me
+  url:/aboutme/
+
