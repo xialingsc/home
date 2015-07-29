@@ -13,7 +13,7 @@ sass:
     sass_dir: _sass
     style: compressed
 permalink: /:categories/:title/
-kramdown:
+markdown: kramdown
   toc_levels: 1..2
 highlighter: pygments
 gems:
@@ -33,4 +33,3 @@ owner:
 disqus-shortname:xialingsc
 
 
-exclude: ["lib", "config.rb", ".sass-cache", "Capfile", "config", "log", "Rakefile", "Rakefile.rb", "tmp", "*.sublime-project", "*.sublime-workspace", "Gemfile", "Gemfile.lock", "README.md", "LICENSE", "node_modules", "Gruntfile.js", "package.json"]
