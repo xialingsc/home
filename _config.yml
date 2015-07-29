@@ -1,9 +1,9 @@
 # Site wide configuration
 
 title: "夏令的博客"
-description: "记录那些技术与人文点滴，心向远方"
+description: "记录那些技术与人文点滴-心向远方"
 logo: photo.jpg # 120x120 px default image used for Twitter summary card
-teaser: teaser/default.jpg # 400x250 px default teaser image used in image archive grid
+teaser: teaser/teaser.jpg # 400x250 px default teaser image used in image archive grid
 locale:
 url: 
 
@@ -23,7 +23,7 @@ gems:
 owner:
   name: xialingsc(夏令)
   email: xialingsc@gmail.com
-  twitter:
+  twitter: lingsc
   google:
     ad-client: 
     ad-slot: 
