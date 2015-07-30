@@ -7,6 +7,18 @@ teaser: teaser/teaser.jpg # 400x250 px default teaser image used in image archiv
 locale:
 url: 
 
+
+default:                       
+    -
+      scope:                 
+          type: "article"    
+      values:                
+          ads: false         
+          toc: false         
+
+
+
+
 # Jekyll configuration
 
 sass:
