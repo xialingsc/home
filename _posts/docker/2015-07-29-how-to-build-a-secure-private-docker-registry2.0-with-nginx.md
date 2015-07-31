@@ -6,7 +6,6 @@ disqus: true
 categories: docker
 ---
 
-    作者：夏令
     本文简要介绍了搭建Docker Registry2.0的场景，着重描述在Ubuntu 14.04上如何利用nginx来搭建一个相对安全的私有Docker Registry2.0，同时也将搭建过程中遇到的一些问题进行总结，目的是让感兴趣的同学能根据这篇文章内容自行成功搭建私有仓库，少走弯路。
 
 
@@ -30,15 +29,19 @@ categories: docker
 >如何从低版本升级到具体某个高版本，可以自行Google。也可以按如下方法升级到Docker最新版。
 
 >-停止所有运行的容器
-
->`docker ps`
-
->`docker stop contaierid`
-
+{% highlight bash %}
+{% raw %}
+docker ps
+docker stop contaierid`
+{% endraw %} 
+{% endhighlight %}
+{% highlight bash %}
+{% raw %}
 >-停止Docker服务
-
->`sudo service docker stop`
-
+{% raw %}
+sudo service docker stop
+{% endraw %}
+{% endhighlight %}
 >-下载最新的二进制文件
 
 >`sudo wget https://get.docker.com/builds/Linux/x86_64/docker-latest -O /usr/bin/docker && chmod +x /usr/bin/docker`
