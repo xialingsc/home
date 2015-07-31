@@ -12,7 +12,7 @@ categories: docker
 
 ##一、背景
 
-2013年底至2014年初，部门大咖对Docker进行了技术预研，并在国内相关技术会议上进行了推荐，当时Docker还并未发布1.0版本。2014年年中，为了配合新产品的发版，我们在基础运行环境中预装了Java、Git、Zsh等多个工具。利用shell从git上拉取各个组件进行打包编译，通过fabric自动化脚本将该产品部署在Docker容器中，用于产品单机和集群环境的功能、性能测试。在这个过程中，我们解决了字符集、时间不同步等诸多问题，最终该产品的基础镜像已累积到上GB的大小。
+2013年底至2014年初，公司技术大牛对Docker进行了技术预研，并在国内相关技术会议上进行了推荐，当时Docker还并未发布1.0版本。2014年年中，为了配合新产品的发版，我们在基础运行环境中预装了Java、Git、Zsh等多个工具。利用shell从git上拉取各个组件进行打包编译，通过fabric自动化脚本将该产品部署在Docker容器中，用于产品单机和集群环境的功能、性能测试。在这个过程中，我们解决了字符集、时间不同步等诸多问题，最终该产品的基础镜像已累积到上GB的大小。
 
 ##二、为什么要选择Nginx+Registry2.0
 
@@ -101,22 +101,116 @@ categories: docker
 
 ##五、如何进行测试才能说明已经搭建成功
 
-###1.验证登录
+注意：这里假定内网访问，且宿主机别名为devregistry
 
+###1.验证登录
+	
+	方法一：telnet 域名/别名 443。再输入docker login -u testu -p 密码 -e '' devregistry:443，出现login Sucessed，就OK了。
+
+	方法二:打开浏览器，在地址栏中输入https://域名:443/v2,在接受安全警告后输入用户名/密码，可以在页面上看到{}
+	(方法二笔者未进行测试)
 
 ###2.在客户端配置证书
+##### Ubuntu Docker 客户端
+	(1)在hosts文件中加入devregistry并保存退出(上文已有描述，但这的确很重要)
+	sudo vi /etc/hosts
+	10.10.62.103 devregistry
+	
+	(2)启动docker服务
+	sudo service docker start
+	
+	(3)创建一个扩展证书存放目录
+	sudo mkdir /usr/share/ca-certificates/extra
+	
+	(4)拷贝docker-registry.crt证书至/usr/share/ca-certificates/extra
+	
+	(5)注册证书
+	sudo dpkg-reconfigure ca-certificates
+	
+
+##### Mac Boot2docker 客户端
+	(1)方法一
+	笔者曾按一些文档的描述尝试过，但并未成功。比如：进入boot2docker虚拟机,将之前生成的docker-registry.crt传入,并在/var/lib/boot2docker/下创建bootlocal.sh，增加如下内容：
+	#!/bin/sh 
+	cat /var/lib/boot2docker/docker-registry.crt | sudo tee -a /etc/ssl/certs/ca-certificates.crt
+	这种做法目的确实能将docker-registry.crt的内容在boot2docker启动时自动添加到certificates.crt中，但重启docker或boot2docker后，docker login devregistry:443仍然无法登录。
+	
+	(2)方法二
+	为了简单，这里详细描述了操作步骤
+	a.从mac进入到虚拟机
+	boot2docker ssh
+	b.在hosts文件中加入devregistry并保存退出
+	sudo vi /etc/hosts
+	10.10.62.103 devregistry
+	c.切换用户
+	sudo -i
+	d.进入目录
+	cd /etc/docker
+	e.创建certs.d目录
+	mkdir -p certs.d
+	f.进入certs.d
+	cd certs.d
+	g.创建devregistry:443目录
+	mkdir -p devregistry:443
+	h.将docker-registry.crt拷贝至devregistry:443
+	cp /var/lib/boot2docker/docker-registry.crt ./
+	i.停止并启动Docker
+	/etc/init.d/docker stop
+	/etc/init.d/docker start
+	
+	测试：
+	docker login -u testu -p 密码 -e '' devregistry:443
+	Email: 
+	Login Succeeded
+	
+	其实这是另一种在Ubuntu下配置证书的方法
+	
+	
+
+###3.推送测试
+
+假定以hello-world:latest镜像为例进行推送测试
+
+标记镜像
+docker tag hello-world devregistry:443/hello
+
+推送镜像
+docker push devregistry:443/hello
 
 
-###3.推送/拉取测试
+##六、需要注意
+###1.参考文档资料的选择
+官网介绍的资料比较全，如果你是首次搭建，一步步去做，你会发现停止容器、删除容器的操作在不断重复。同时，官网默认大家是掌握较多Linux及Nginx方面的相关知识,若按照官网介绍去操作，你一定会遇到坑，出现一些问题时就只能问Google,还相当郁闷。
 
+国内很多同学写过类似的文档，找到适合自己的一篇文章，且与文档描述场景相同，比较难。
 
+建议方法是：多google,多问问大牛,到论坛提问,静心分析
 
-##六、遇到的问题及解决办法
+###2.心态分析
 
+我们在遇到几个技术叠加在一起的新问题时，最好进行解耦，一步步确定问题并解决问题，同时保持小强心态，打不倒。
 
 ##七、致谢
 
-##八、参考文档
+感谢Docker大咖Allen、孙健波、wangzhezhe、云栈科技王利俊的交流指导。
+
+感谢以下文档的原作者
+
+[Installing Docker Registry 2.0.1 using self signed certificates](http://mpas.github.io/post/2015/06/docker-setup-registry/)
+
+[Running Secured Docker Registry 2.0](http://container-solutions.com/running-secured-docker-registry-2-0/)
+
+[用 Nginx 来做私有 docker registry 的安全控制](http://cloud.51cto.com/art/201412/458680_all.htm)
+
+[搭建docker内网私服（docker-registry with nginx&ssl on centos）](http://seanlook.com/2014/11/13/deploy-private-docker-registry-with-nginx-ssl/)
+
+[腾讯云玩转Docker---搭建私有仓库](http://r2xe.com/wei-ming-ming-2/)
+
+[部署 Docker Registry 服务](http://dockone.io/article/324)
+
+[把Docker升级到1.7.0版本](http://ju.outofmemory.cn/entry/188192)
+
+
 
 
 
