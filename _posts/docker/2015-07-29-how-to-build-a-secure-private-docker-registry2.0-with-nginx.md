@@ -1,27 +1,27 @@
----                                                                                                                                                                                                       
-layout: article
+---                                                                                                                                                                   layout: article
 title:  "如何利用nginx搭建一个较安全的私有Docker Registry 2.0"
 toc: true
 disqus: true
 categories: docker
 ---
 
+
 > 本文简要介绍了搭建Docker Registry2.0的场景，着重描述在Ubuntu 14.04上如何利用nginx来搭建一个相对安全的私有Docker Registry2.0，同时也将搭建过程中遇到的一些问题进行总结，目的是让感兴趣的同学能根据这篇文章内容自行成功搭建私有仓库，少走弯路。
 
 
-##一、背景
+##背景
 
 2013年底至2014年初，公司技术大牛对Docker进行了技术预研，并在国内相关技术会议上进行了推荐，当时Docker还并未发布1.0版本。2014年年中，为了配合新产品的发版，我们在基础运行环境中预装了Java、Git、Zsh等多个工具。利用shell从git上拉取各个组件进行打包编译，通过fabric自动化脚本将该产品部署在Docker容器中，用于产品单机和集群环境的功能、性能测试。在这个过程中，我们解决了字符集、时间不同步等诸多问题，最终该产品的基础镜像已累积到上GB的大小。
 
-##二、为什么要选择Nginx+Registry2.0
+##为什么要选择Nginx+Registry2.0
 
 在开发Docker Web容器管理控制平台过程中，Registry1.0、2.0两个版本均有使用，但2.0的速度比1.0快。从基础镜像大小及公司内外网络带宽情况考虑，结合Docker官网上推荐的方式，选定了Nginx+Registry2.0的技术方案。
 
-##三、选择靠谱的参考资料
+##选择靠谱的参考资料
 
 为了构建安全私有仓库，先从Docker官网的[Delopying a registry server](https://docs.docker.com/registry/deploying/)和[Authentication](https://docs.docker.com/registry/authentication/)进行了学习，在实际操作过程中遇到一些问题(在[DockerOne](http://dockone.io/question/436)和[Docker官网](https://github.com/docker/docker-registry/issues/1023)的提问)后，又查找相关同行分享的搭建经验，咨询了多位Docker大咖后，结合国外同行一篇[文章](http://mpas.github.io/post/2015/06/docker-setup-registry/)的部分内容,完成了这个看上简单但非常糟心的任务。自己经历过的痛苦就尽量不要让别人去重复了，希望这篇文章是大家搭建过程中的靠谱资料。
 
-##四、搭建过程
+##搭建过程
 
 ###1.前提
 
@@ -92,7 +92,7 @@ sudo mkdir -p /opt/docker/registry/conf
 
 到目前为止，我们已经成功运行了一个带有签名证书和用户名/密码的Docker Registry2.0了。
 
-##五、如何进行测试才能说明已经搭建成功
+##如何进行测试才能说明已经搭建成功
 
 注意：这里假定内网访问，且宿主机别名为devregistry
 
@@ -171,7 +171,7 @@ docker tag hello-world devregistry:443/hello
 docker push devregistry:443/hello
 
 
-##六、需要注意
+##需要注意
 ###1.参考文档资料的选择
 官网介绍的资料比较全，如果你是首次搭建，一步步去做，你会发现停止容器、删除容器的操作在不断重复。同时，官网默认大家是掌握较多Linux及Nginx方面的相关知识,若按照官网介绍去操作，你一定会遇到坑，出现一些问题时就只能问Google,还相当郁闷。
 
@@ -183,7 +183,7 @@ docker push devregistry:443/hello
 
 我们在遇到几个技术叠加在一起的新问题时，最好进行解耦，一步步确定问题并解决问题，同时保持小强心态，打不倒。
 
-##七、致谢
+##致谢
 
 感谢Docker大咖Allen、孙健波、wangzhezhe、云栈科技王利俊的交流指导。
 
