@@ -1,23 +1,23 @@
 # Site navigation links
 
 - title: Home
-  url: /
+  url: /home/
   excerpt:
   image:
 
 - title: Mac
-  url: /mac/
+  url: /home/mac/
 
 - title: Linux
-  url: /linux/
+  url: /home/linux/
 
 - title: Docker
-  url: /docker/
+  url: /home/docker/
 
 - title: Go
-  url: /go/
+  url: /home/go/
 
 - title: Shell
-  url: /shell/
+  url: /home/shell/
 
 
