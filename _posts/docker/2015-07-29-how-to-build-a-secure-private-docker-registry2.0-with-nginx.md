@@ -43,16 +43,16 @@ sudo wget https://get.docker.com/builds/Linux/x86_64/docker-latest -O /usr/bin/d
 /etc/init.d/docker start
 查看Docker版本
 docker version
-{% endhighlight %}
 {% endraw %}
+{% endhighlight %}
 
 ###2.创建Docker仓库数据和配置目录
 {% highlight bash %}
 {% raw %}
 sudo mkdir -p /opt/docker/registry/data
 sudo mkdir -p /opt/docker/registry/conf
-{% endhighlight %}
 {% endraw %}
+{% endhighlight %}
 
 ###3.运行Docker仓库
 
