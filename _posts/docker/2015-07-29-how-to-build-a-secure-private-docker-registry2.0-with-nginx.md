@@ -26,34 +26,23 @@ categories: docker
 
 首先你需要安装Docker1.6.0及以上版本用于支持Registry2.0,其次还需要了解Docker的基本操作。
 
->如何从低版本升级到具体某个高版本，可以自行Google。也可以按如下方法升级到Docker最新版。
-
->-停止所有运行的容器
 {% highlight bash %}
 {% raw %}
+如何从低版本升级到具体某个高版本，可以自行Google。也可以按如下方法升级到Docker最新版。
+
+停止所有运行的容器
 docker ps
-docker stop contaierid`
-{% endraw %} 
-{% endhighlight %}
-{% highlight bash %}
-{% raw %}
->-停止Docker服务
-{% raw %}
+docker stop contaierid
+停止Docker服务
 sudo service docker stop
-{% endraw %}
+下载最新的二进制文件
+sudo wget https://get.docker.com/builds/Linux/x86_64/docker-latest -O /usr/bin/docker && chmod +x /usr/bin/docker
+启动Docker服务
+/etc/init.d/docker start
+查看Docker版本
+docker version
 {% endhighlight %}
->-下载最新的二进制文件
-
->`sudo wget https://get.docker.com/builds/Linux/x86_64/docker-latest -O /usr/bin/docker && chmod +x /usr/bin/docker`
-
->-启动Docker服务
-
->`/etc/init.d/docker start`
-
->-查看Docker版本
-
->`docker version`
-
+{% endraw %}
 
 ###2.创建Docker仓库数据和配置目录
 
