@@ -22,6 +22,7 @@ categories: docker
 为了构建安全私有仓库，先从Docker官网的[Delopying a registry server](https://docs.docker.com/registry/deploying/)和[Authentication](https://docs.docker.com/registry/authentication/)进行了学习，在实际操作过程中遇到一些问题(在[DockerOne](http://dockone.io/question/436)和[Docker官网](https://github.com/docker/docker-registry/issues/1023)的提问)后，又查找相关同行分享的搭建经验，咨询了多位Docker大咖后，结合国外同行一篇[文章](http://mpas.github.io/post/2015/06/docker-setup-registry/)的部分内容,完成了这个看上简单但非常糟心的任务。自己经历过的痛苦就尽量不要让别人去重复了，希望这篇文章是大家搭建过程中的靠谱资料。
 
 ##四、搭建过程
+
 ###1.前提
 
 首先你需要安装Docker1.6.0及以上版本用于支持Registry2.0,其次还需要了解Docker的基本操作。
@@ -29,7 +30,6 @@ categories: docker
 {% highlight bash %}
 {% raw %}
 如何从低版本升级到具体某个高版本，可以自行Google。也可以按如下方法升级到Docker最新版。
-
 停止所有运行的容器
 docker ps
 docker stop contaierid
@@ -45,11 +45,12 @@ docker version
 {% endraw %}
 
 ###2.创建Docker仓库数据和配置目录
-
-`sudo mkdir -p /opt/docker/registry/data`
-
-`sudo mkdir -p /opt/docker/registry/conf`
-
+{% highlight bash %}
+{% raw %}
+sudo mkdir -p /opt/docker/registry/data
+sudo mkdir -p /opt/docker/registry/conf
+{% endhighlight %}
+{% endraw %}
 
 ###3.运行Docker仓库
 
