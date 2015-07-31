@@ -3,20 +3,17 @@
 title: "夏令的博客"
 description: "记录那些技术与人文点滴-心向远方"
 logo: photo.jpg # 120x120 px default image used for Twitter summary card
-teaser: teaser/teaser.jpg # 400x250 px default teaser image used in image archive grid
+teaser: /teaser/teaser.jpg # 400x250 px default teaser image used in image archive grid
 locale:
 url: 
 
-
 default:                       
     -
-      scope:                 
-          type: "article"    
-      values:                
-          ads: false         
-          toc: false         
-
-
+        scope:                 
+            type: "article"    
+        values:                
+            ads: false         
+            toc: false         
 
 
 # Jekyll configuration
@@ -26,6 +23,8 @@ sass:
     style: compressed
 permalink: /:categories/:title/
 markdown: kramdown
+kramdown:
+    input: GFM
 highlighter: pygments
 gems:
   - jekyll-sitemap
