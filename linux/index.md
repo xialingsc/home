@@ -1,6 +1,7 @@
 ---
 layout: archive
 title: "Latest Posts"
+excerpt: "Intresting things in the linux world"
 ---
 
 <div class="tiles">
