@@ -1,6 +1,6 @@
 ---
 layout: article
-title:  "如何利用nginx搭建较安全的私有Docker Registry 2.0"
+title:  "如何利用nginx及Registry2.0搭建Docker安全私有仓库"
 categories: docker
 disqus: true
 image:
