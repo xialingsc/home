@@ -9,7 +9,9 @@ image:
 
 {% highlight bash %}
 {% raw %}
-本文简要介绍了搭建Docker Registry2.0的场景，着重描述在Ubuntu 14.04上如何利用nginx来搭建一个相对安全的私有Docker Registry2.0，同时也将搭建过程中遇到的一些问题进行总结，目的是让感兴趣的同学能根据这篇文章内容自行成功搭建私有仓库，少走弯路。
+本文简要介绍了搭建Docker Registry2.0的场景，着重描述在Ubuntu 14.04上如何利用nginx来搭建一个相对安全的
+私有Docker Registry2.0，同时也将搭建过程中遇到的一些问题进行总结，目的是让感兴趣的同学能根据这篇文章内
+容自行成功搭建私有仓库，少走弯路。
 {% endraw %}
 {% endhighlight %} 
 
@@ -70,18 +72,30 @@ sudo mkdir -p /opt/docker/registry/conf
 
 运行仓库并命名为docker-registry,让镜像存储在宿主机上的/opt/docker/registry/data/下。
 
-`sudo docker run -d -p 5000:5000 -v /opt/docker/registry/data:/tmp/registry-dev --name docker-registry registry:2.0.1`
-
->这里注意避免5000端口被占用而引起冲突,可以通过`sudo docker ps` 查看该容器是否已启动。接下来可以通过`docker tag` ,`docker push`进行简单测试，具体用法可以查询`docker help tag`和`docker help push`.
+{% highlight bash %}
+{% raw %}
+sudo docker run -d -p 5000:5000 -v /opt/docker/registry/data:/tmp/registry-dev \ 
+--name docker-registry registry:2.0.1`
+这里注意避免5000端口被占用而引起冲突,可以通过`sudo docker ps` 查看该容器是否已启动。
+接下来可以通过`docker tag` ,`docker push`进行简单测试，具体用法可以查询`docker help tag`
+和`docker help push`.
+{% endraw %}
+{% endhighlight %}
 
 ###4.生成签名证书
 
-`sudo openssl req -x509 -nodes -newkey rsa:2048  -keyout /opt/docker/registry/conf/docker-registry.key -out /opt/docker/registry/conf/docker-registry.crt`
-
->这里一定要注意：创建证书的时候，可以接收所有默认，直到CN位置时，如果你是准备让外网访问，就需要外网的域名；如果是内网，可以输入运行私有仓库宿主机的别名。我们可以通过`ifconfig`查看ip,假定为10.10.62.103,通过`sudo vi /etc/hosts`添加一行到该文件并保存退出，例如:10.10.62.103 devregistry。
-
->这条命令主要是在/opt/docker/registry/conf/下创建证书docker-registry.key和docker-registry.crt,其中docker-registry.crt放在随后与docker-registry进行交互的装有Docker客户端宿主机上。需要了解的是，这个宿主机可以是运行docker-registry的server，也可以是能访问该域名或别名的装有docker的其他server。
-
+{% highlight bash %}
+{% raw % }
+sudo openssl req -x509 -nodes -newkey rsa:2048  -keyout /opt/docker/registry/conf/docker-registry.key \
+-out /opt/docker/registry/conf/docker-registry.crt
+这里一定要注意：创建证书的时候，可以接收所有默认，直到CN位置时，如果你是准备让外网访问，就需要外网的域名；
+如果是内网，可以输入运行私有仓库宿主机的别名。我们可以通过`ifconfig`查看ip,假定为10.10.62.103,通过`sudo vi /etc/hosts`
+添加一行到该文件并保存退出，例如:10.10.62.103 devregistry。
+这条命令主要是在/opt/docker/registry/conf/下创建证书docker-registry.key和docker-registry.crt,其中docker-registry.crt放在
+随后与docker-registry进行交互的装有Docker客户端宿主机上。需要了解的是，这个宿主机可以是运行docker-registry的server，也可
+以是能访问该域名或别名的装有docker的其他server。
+{% endraw %}
+{% endhighlight %}
 
 ###5.创建能够访问仓库的用户名和密码
 为了让允许的用户登录访问仓库，我们需要利用htpasswd创建用户和密码，并存储在/opt/docker/registry/conf/docker-registry.htpasswd文件中.
