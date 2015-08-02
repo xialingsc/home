@@ -74,10 +74,9 @@ sudo mkdir -p /opt/docker/registry/conf
 
 {% highlight bash %}
 {% raw %}
-sudo docker run -d -p 5000:5000 -v /opt/docker/registry/data:/tmp/registry-dev \ 
---name docker-registry registry:2.0.1`
+sudo docker run -d -p 5000:5000 -v /opt/docker/registry/data:/tmp/registry-dev --name docker-registry registry:2.0.1
 这里注意避免5000端口被占用而引起冲突,可以通过`sudo docker ps` 查看该容器是否已启动。
-接下来可以通过`docker tag` ,`docker push`进行简单测试，具体用法可以查询`docker help tag`
+接下来可以通过`docker tag` ,`docker push`进行简单测试，具体用法可以查询`docker help tag
 和`docker help push`.
 {% endraw %}
 {% endhighlight %}
@@ -85,8 +84,8 @@ sudo docker run -d -p 5000:5000 -v /opt/docker/registry/data:/tmp/registry-dev \
 ###4.生成签名证书
 
 {% highlight bash %}
-{% raw % }
-sudo openssl req -x509 -nodes -newkey rsa:2048  -keyout /opt/docker/registry/conf/docker-registry.key \
+{% raw %}
+sudo openssl req -x509 -nodes -newkey rsa:2048  -keyout /opt/docker/registry/conf/docker-registry.key 
 -out /opt/docker/registry/conf/docker-registry.crt
 这里一定要注意：创建证书的时候，可以接收所有默认，直到CN位置时，如果你是准备让外网访问，就需要外网的域名；
 如果是内网，可以输入运行私有仓库宿主机的别名。我们可以通过`ifconfig`查看ip,假定为10.10.62.103,通过`sudo vi /etc/hosts`
@@ -111,10 +110,13 @@ sudo openssl req -x509 -nodes -newkey rsa:2048  -keyout /opt/docker/registry/con
 例如：创建第二个用户：`sudo htpasswd /opt/docker/registry/conf/docker-registry.htpasswd testu`
 
 ###6.运行Nginx
-`sudo docker run -d -p 443:443  -e REGISTRY_HOST="docker-registry" -e REGISTRY_PORT="5000" -e SERVER_NAME="localhost" --link docker-registry:docker-registry -v /opt/docker/registry/conf/docker-registry.htpasswd:/etc/nginx/.htpasswd:ro -v /opt/docker/registry/conf:/etc/nginx/ssl:ro --name docker-registry-proxy containersol/docker-registry-proxy`
+{% highlight %}
+{% raw %}
+sudo docker run -d -p 443:443  -e REGISTRY_HOST="docker-registry" -e REGISTRY_PORT="5000" -e SERVER_NAME="localhost" --link docker-registry:docker-registry -v /opt/docker/registry/conf/docker-registry.htpasswd:/etc/nginx/.htpasswd:ro -v /opt/docker/registry/conf:/etc/nginx/ssl:ro --name docker-registry-proxy containersol/docker-registry-proxy
 
 这里使用了一个镜像去创建nginx容器，如果我们利用独立的nginx去进行配置的话，要求nginx版本在1.7.5以上才能支持nginx.conf中add_header等配置。如果是作为内网使用，建议采用nginx容器这种方式就行。如果允许让外网访问，建议先拷贝docker-registry-proxy容器中nginx.conf配置的内容，然后根据实际情况调整upstream中相关ip,docker-registry.key,docker-registry.htpasswd等文件存放的位置。注意这块nginx.conf配置的server非常重要，需要配置为之前提到的域名或别名。
-
+{% endraw %}
+{% endhighlight %}
 
 到目前为止，我们已经成功运行了一个带有签名证书和用户名/密码的Docker Registry2.0了。
 
@@ -210,11 +212,11 @@ docker push devregistry:443/hello
 
 国内很多同学写过类似的文档，找到适合自己的一篇文章，且与文档描述场景相同，比较难。
 
-建议方法是：多google,多问问大牛,到论坛提问,静心分析
+解决问题的大致方法是：静心分析,多google,多问问大牛,到论坛提问,静心分析
 
-###2.心态分析
+###2.心态总结
 
-我们在遇到几个技术叠加在一起的新问题时，最好进行解耦，一步步确定问题并解决问题，同时保持小强心态，打不倒。
+在遇到几个技术叠加在一起的新问题时，最好进行解耦，一步步确定问题并解决问题，同时保持小强心态，打不死。
 
 
 ---
