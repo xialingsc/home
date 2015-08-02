@@ -76,8 +76,8 @@ sudo mkdir -p /opt/docker/registry/conf
 {% highlight bash %}
 {% raw %}
 sudo docker run -d -p 5000:5000 -v /opt/docker/registry/data:/tmp/registry-dev --name docker-registry registry:2.0.1
-这里注意避免5000端口被占用而引起冲突,可以通过`sudo docker ps` 查看该容器是否已启动。接下来可以通过`docker tag` ,
-`docker push`进行简单测试，具体用法可以查询`docker help tag和`docker help push`.
+这里注意避免5000端口被占用而引起冲突,可以通过sudo docker ps 查看该容器是否已启动。接下来可以通过docker tag ,
+docker push进行简单测试，具体用法可以查询docker help tag和docker help push.
 {% endraw %}
 {% endhighlight %}
 
