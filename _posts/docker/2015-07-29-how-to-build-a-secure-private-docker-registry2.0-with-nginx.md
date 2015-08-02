@@ -107,15 +107,13 @@ sudo openssl req -x509 -nodes -newkey rsa:2048  -keyout /opt/docker/registry/con
 (2)创建用户和密码
 
 `sudo htpasswd -c /opt/docker/registry/conf/docker-registry.htpasswd xl` 
-
->第一个用户需要加-c参数，随后输入密码并确认。添加新用户不需要加-c参数。
-
->例如：创建第二个用户：`sudo htpasswd /opt/docker/registry/conf/docker-registry.htpasswd testu`
+第一个用户需要加-c参数，随后输入密码并确认。添加新用户不需要加-c参数。
+例如：创建第二个用户：`sudo htpasswd /opt/docker/registry/conf/docker-registry.htpasswd testu`
 
 ###6.运行Nginx
 `sudo docker run -d -p 443:443  -e REGISTRY_HOST="docker-registry" -e REGISTRY_PORT="5000" -e SERVER_NAME="localhost" --link docker-registry:docker-registry -v /opt/docker/registry/conf/docker-registry.htpasswd:/etc/nginx/.htpasswd:ro -v /opt/docker/registry/conf:/etc/nginx/ssl:ro --name docker-registry-proxy containersol/docker-registry-proxy`
 
->这里使用了一个镜像去创建nginx容器，如果我们利用独立的nginx去进行配置的话，要求nginx版本在1.7.5以上才能支持nginx.conf中add_header等配置。如果是作为内网使用，建议采用nginx容器这种方式就行。如果允许让外网访问，建议先拷贝docker-registry-proxy容器中nginx.conf配置的内容，然后根据实际情况调整upstream中相关ip,docker-registry.key,docker-registry.htpasswd等文件存放的位置。注意这块nginx.conf配置的server非常重要，需要配置为之前提到的域名或别名。
+这里使用了一个镜像去创建nginx容器，如果我们利用独立的nginx去进行配置的话，要求nginx版本在1.7.5以上才能支持nginx.conf中add_header等配置。如果是作为内网使用，建议采用nginx容器这种方式就行。如果允许让外网访问，建议先拷贝docker-registry-proxy容器中nginx.conf配置的内容，然后根据实际情况调整upstream中相关ip,docker-registry.key,docker-registry.htpasswd等文件存放的位置。注意这块nginx.conf配置的server非常重要，需要配置为之前提到的域名或别名。
 
 
 到目前为止，我们已经成功运行了一个带有签名证书和用户名/密码的Docker Registry2.0了。
