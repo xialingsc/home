@@ -52,7 +52,8 @@ docker stop contaierid
 停止Docker服务
 sudo service docker stop
 下载最新的二进制文件
-sudo wget https://get.docker.com/builds/Linux/x86_64/docker-latest -O /usr/bin/docker && chmod +x /usr/bin/docker
+sudo wget https://get.docker.com/builds/Linux/x86_64/docker-latest -O /usr/bin/docker 
+&& chmod +x /usr/bin/docker
 启动Docker服务
 /etc/init.d/docker start
 查看Docker版本
@@ -87,11 +88,11 @@ sudo docker run -d -p 5000:5000 -v /opt/docker/registry/data:/tmp/registry-dev -
 sudo openssl req -x509 -nodes -newkey rsa:2048  -keyout /opt/docker/registry/conf/docker-registry.key 
 -out /opt/docker/registry/conf/docker-registry.crt
 这里一定要注意：创建证书的时候，可以接收所有默认，直到CN位置时，如果你是准备让外网访问，就需要外网的域名；
-如果是内网，可以输入运行私有仓库宿主机的别名。我们可以通过`ifconfig`查看ip,假定为10.10.62.103,通过`sudo vi /etc/hosts`
-添加一行到该文件并保存退出，例如:10.10.62.103 devregistry。
-这条命令主要是在/opt/docker/registry/conf/下创建证书docker-registry.key和docker-registry.crt,其中docker-registry.crt放在
-随后与docker-registry进行交互的装有Docker客户端宿主机上。需要了解的是，这个宿主机可以是运行docker-registry的server，也可
-以是能访问该域名或别名的装有docker的其他server。
+如果是内网，可以输入运行私有仓库宿主机的别名。我们可以通过`ifconfig`查看ip,假定为10.10.62.103,通过
+sudo vi /etc/hosts添加一行到该文件并保存退出，例如:10.10.62.103 devregistry。
+这条命令主要是在/opt/docker/registry/conf/下创建证书docker-registry.key和docker-registry.crt,其中
+docker-registry.crt放在随后与docker-registry进行交互的装有Docker客户端宿主机上。需要了解的是，这个宿主机
+可以是运行docker-registry的server，也可以是能访问该域名或别名的装有docker的其他server。
 {% endraw %}
 {% endhighlight %}
 
@@ -111,14 +112,16 @@ sudo openssl req -x509 -nodes -newkey rsa:2048  -keyout /opt/docker/registry/con
 ###6.运行Nginx
 {% highlight bash %}
 {% raw %}
-sudo docker run -d -p 443:443  -e REGISTRY_HOST="docker-registry" -e REGISTRY_PORT="5000" -e SERVER_NAME="localhost" 
---link docker-registry:docker-registry -v /opt/docker/registry/conf/docker-registry.htpasswd:/etc/nginx/.htpasswd:ro 
--v /opt/docker/registry/conf:/etc/nginx/ssl:ro --name docker-registry-proxy containersol/docker-registry-proxy
+sudo docker run -d -p 443:443  -e REGISTRY_HOST="docker-registry" -e REGISTRY_PORT="5000" -e 
+SERVER_NAME="localhost" --link docker-registry:docker-registry -v /opt/docker/registry/conf/
+docker-registry.htpasswd:/etc/nginx/.htpasswd:ro -v /opt/docker/registry/conf:/etc/nginx/ssl:ro 
+--name docker-registry-proxy containersol/docker-registry-proxy
 
-这里使用了一个镜像去创建nginx容器，如果我们利用独立的nginx去进行配置的话，要求nginx版本在1.7.5以上才能支持nginx.conf中
-add_header等配置。如果是作为内网使用，建议采用nginx容器这种方式就行。如果允许让外网访问，建议先拷贝docker-registry-proxy
-容器中nginx.conf配置的内容，然后根据实际情况调整upstream中相关ip,docker-registry.key,docker-registry.htpasswd等文件存放的
-位置。注意这块nginx.conf配置的server非常重要，需要配置为之前提到的域名或别名。
+这里使用了一个镜像去创建nginx容器，如果我们利用独立的nginx去进行配置的话，要求nginx版本在1.7.5以
+上才能支持nginx.conf中add_header等配置。如果是作为内网使用，建议采用nginx容器这种方式就行。如果允
+许让外网访问，建议先拷贝docker-registry-proxy容器中nginx.conf配置的内容，然后根据实际情况调整upstream中
+相关ip,docker-registry.key,docker-registry.htpasswd等文件存放的位置。
+注意这块nginx.conf配置的server非常重要，需要配置为之前提到的域名或别名。
 {% endraw %}
 {% endhighlight %}
 
@@ -158,49 +161,48 @@ add_header等配置。如果是作为内网使用，建议采用nginx容器这�
 	
 
 ##### Mac Boot2docker 客户端
-	(1)方法一
-	{% highlight bash %}
-    {% raw %}
-    笔者曾按一些文档的描述尝试过，但并未成功。比如：进入boot2docker虚拟机,将之前生成的docker-registry.crt传入,并在
-    /var/lib/boot2docker/下创建bootlocal.sh，增加如下内容：
-    #!/bin/sh 
-	cat /var/lib/boot2docker/docker-registry.crt | sudo tee -a /etc/ssl/certs/ca-certificates.crt
-	这种做法目的确实能将docker-registry.crt的内容在boot2docker启动时自动添加到certificates.crt中，但重启docker或boot2docker
-    后，docker login devregistry:443仍然无法登录。
-	{% endraw %}
-    {% endhighlight %}
-	(2)方法二
-	为了简单，这里详细描述了操作步骤
-	{% highlight bash %}
-    {% raw %}
-    a.从mac进入到虚拟机
-	boot2docker ssh
-	b.在hosts文件中加入devregistry并保存退出
-	sudo vi /etc/hosts
-	10.10.62.103 devregistry
-	c.切换用户
-	sudo -i
-	d.进入目录
-	cd /etc/docker
-	e.创建certs.d目录
-	mkdir -p certs.d
-	f.进入certs.d
-	cd certs.d
-	g.创建devregistry:443目录
-	mkdir -p devregistry:443
-	h.将docker-registry.crt拷贝至devregistry:443
-	cp /var/lib/boot2docker/docker-registry.crt ./
-	i.停止并启动Docker
-	/etc/init.d/docker stop
-	/etc/init.d/docker start
-	{% endraw %}
-    {% endhighlight %}
-	测试：
-	docker login -u testu -p 密码 -e '' devregistry:443
-	Email: 
-	Login Succeeded
+(1)方法一
+{% highlight bash %}
+{% raw %}
+笔者曾按一些文档的描述尝试过，但并未成功。比如：进入boot2docker虚拟机,将之前生成的docker-registry.crt传入,并在
+/var/lib/boot2docker/下创建bootlocal.sh，增加如下内容：
+#!/bin/sh 
+cat /var/lib/boot2docker/docker-registry.crt | sudo tee -a /etc/ssl/certs/ca-certificates.crt
+这种做法目的确实能将docker-registry.crt的内容在boot2docker启动时自动添加到certificates.crt中，但重启docker或
+boot2docker后，docker login devregistry:443仍然无法登录。
+{% endraw %}
+{% endhighlight %}
+(2)方法二
+为了简单，这里详细描述了操作步骤
+{% highlight bash %}
+{% raw %}
+a.从mac进入到虚拟机
+boot2docker ssh
+b.在hosts文件中加入devregistry并保存退出
+sudo vi /etc/hosts
+10.10.62.103 devregistry
+c.切换到root
+d.进入目录
+cd /etc/docker
+e.创建certs.d目录
+mkdir -p certs.d
+f.进入certs.d
+cd certs.d
+g.创建devregistry:443目录
+mkdir -p devregistry:443
+h.将docker-registry.crt拷贝至devregistry:443
+cp /var/lib/boot2docker/docker-registry.crt ./
+i.停止并启动Docker
+/etc/init.d/docker stop
+/etc/init.d/docker start
+{% endraw %}
+{% endhighlight %}
+测试：
+docker login -u testu -p 密码 -e '' devregistry:443
+Email: 
+Login Succeeded
 	
-	其实这是另一种在Ubuntu下配置证书的方法
+其实这是另一种在Ubuntu下配置证书的方法
 	
 	
 
