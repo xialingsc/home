@@ -75,9 +75,8 @@ sudo mkdir -p /opt/docker/registry/conf
 {% highlight bash %}
 {% raw %}
 sudo docker run -d -p 5000:5000 -v /opt/docker/registry/data:/tmp/registry-dev --name docker-registry registry:2.0.1
-这里注意避免5000端口被占用而引起冲突,可以通过`sudo docker ps` 查看该容器是否已启动。
-接下来可以通过`docker tag` ,`docker push`进行简单测试，具体用法可以查询`docker help tag
-和`docker help push`.
+这里注意避免5000端口被占用而引起冲突,可以通过`sudo docker ps` 查看该容器是否已启动。接下来可以通过`docker tag` ,
+`docker push`进行简单测试，具体用法可以查询`docker help tag和`docker help push`.
 {% endraw %}
 {% endhighlight %}
 
@@ -97,7 +96,7 @@ sudo openssl req -x509 -nodes -newkey rsa:2048  -keyout /opt/docker/registry/con
 {% endhighlight %}
 
 ###5.创建能够访问仓库的用户名和密码
-为了让允许的用户登录访问仓库，我们需要利用htpasswd创建用户和密码，并存储在/opt/docker/registry/conf/docker-registry.htpasswd文件中.
+为了让允许的用户登录访问，需要利用htpasswd创建用户和密码，并存储于/opt/docker/registry/conf/docker-registry.htpasswd文件.
 (1)安装htpasswd
 如果该命令已安装，可以略过此步。否则利用如下命令进行安装
 
@@ -110,11 +109,16 @@ sudo openssl req -x509 -nodes -newkey rsa:2048  -keyout /opt/docker/registry/con
 例如：创建第二个用户：`sudo htpasswd /opt/docker/registry/conf/docker-registry.htpasswd testu`
 
 ###6.运行Nginx
-{% highlight %}
+{% highlight bash %}
 {% raw %}
-sudo docker run -d -p 443:443  -e REGISTRY_HOST="docker-registry" -e REGISTRY_PORT="5000" -e SERVER_NAME="localhost" --link docker-registry:docker-registry -v /opt/docker/registry/conf/docker-registry.htpasswd:/etc/nginx/.htpasswd:ro -v /opt/docker/registry/conf:/etc/nginx/ssl:ro --name docker-registry-proxy containersol/docker-registry-proxy
+sudo docker run -d -p 443:443  -e REGISTRY_HOST="docker-registry" -e REGISTRY_PORT="5000" -e SERVER_NAME="localhost" 
+--link docker-registry:docker-registry -v /opt/docker/registry/conf/docker-registry.htpasswd:/etc/nginx/.htpasswd:ro 
+-v /opt/docker/registry/conf:/etc/nginx/ssl:ro --name docker-registry-proxy containersol/docker-registry-proxy
 
-这里使用了一个镜像去创建nginx容器，如果我们利用独立的nginx去进行配置的话，要求nginx版本在1.7.5以上才能支持nginx.conf中add_header等配置。如果是作为内网使用，建议采用nginx容器这种方式就行。如果允许让外网访问，建议先拷贝docker-registry-proxy容器中nginx.conf配置的内容，然后根据实际情况调整upstream中相关ip,docker-registry.key,docker-registry.htpasswd等文件存放的位置。注意这块nginx.conf配置的server非常重要，需要配置为之前提到的域名或别名。
+这里使用了一个镜像去创建nginx容器，如果我们利用独立的nginx去进行配置的话，要求nginx版本在1.7.5以上才能支持nginx.conf中
+add_header等配置。如果是作为内网使用，建议采用nginx容器这种方式就行。如果允许让外网访问，建议先拷贝docker-registry-proxy
+容器中nginx.conf配置的内容，然后根据实际情况调整upstream中相关ip,docker-registry.key,docker-registry.htpasswd等文件存放的
+位置。注意这块nginx.conf配置的server非常重要，需要配置为之前提到的域名或别名。
 {% endraw %}
 {% endhighlight %}
 
@@ -155,14 +159,21 @@ sudo docker run -d -p 443:443  -e REGISTRY_HOST="docker-registry" -e REGISTRY_PO
 
 ##### Mac Boot2docker 客户端
 	(1)方法一
-	笔者曾按一些文档的描述尝试过，但并未成功。比如：进入boot2docker虚拟机,将之前生成的docker-registry.crt传入,并在/var/lib/boot2docker/下创建bootlocal.sh，增加如下内容：
-	#!/bin/sh 
+	{% highlight bash %}
+    {% raw %}
+    笔者曾按一些文档的描述尝试过，但并未成功。比如：进入boot2docker虚拟机,将之前生成的docker-registry.crt传入,并在
+    /var/lib/boot2docker/下创建bootlocal.sh，增加如下内容：
+    #!/bin/sh 
 	cat /var/lib/boot2docker/docker-registry.crt | sudo tee -a /etc/ssl/certs/ca-certificates.crt
-	这种做法目的确实能将docker-registry.crt的内容在boot2docker启动时自动添加到certificates.crt中，但重启docker或boot2docker后，docker login devregistry:443仍然无法登录。
-	
+	这种做法目的确实能将docker-registry.crt的内容在boot2docker启动时自动添加到certificates.crt中，但重启docker或boot2docker
+    后，docker login devregistry:443仍然无法登录。
+	{% endraw %}
+    {% endhighlight %}
 	(2)方法二
 	为了简单，这里详细描述了操作步骤
-	a.从mac进入到虚拟机
+	{% highlight bash %}
+    {% raw %}
+    a.从mac进入到虚拟机
 	boot2docker ssh
 	b.在hosts文件中加入devregistry并保存退出
 	sudo vi /etc/hosts
@@ -182,7 +193,8 @@ sudo docker run -d -p 443:443  -e REGISTRY_HOST="docker-registry" -e REGISTRY_PO
 	i.停止并启动Docker
 	/etc/init.d/docker stop
 	/etc/init.d/docker start
-	
+	{% endraw %}
+    {% endhighlight %}
 	测试：
 	docker login -u testu -p 密码 -e '' devregistry:443
 	Email: 
