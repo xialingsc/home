@@ -9,7 +9,8 @@ image:
 
 {% highlight bash %}
 {% raw %}
-本文简要介绍了利用fabric实现web应用项目的自动化部署思路及过程。
+本文从运行环境、python相关知识、fabric参考资料、安装fabric、fabric入门及接口等方面进行了简要介绍，
+在此基础上介绍了利用fabric实现web项目自动部署的思路及详细过程。
 {% endraw %}
 {% endhighlight %} 
 
@@ -23,7 +24,8 @@ image:
 
 ##运行环境
 
-系统:Ubuntu 12.04
+系统:Ubuntu 12.04 
+(Mac OS 可以使用gsed)
 
 Shell:z-shell
 
