@@ -4,7 +4,7 @@ title:  "浅谈基于Fabric实现项目自动部署"
 categories: python
 disqus: true
 image:
-    teaser: teaser/suo.jpg
+    teaser: teaser/chilun.jpg
 ---
 
 {% highlight bash %}

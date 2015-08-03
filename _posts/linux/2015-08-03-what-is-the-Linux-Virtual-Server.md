@@ -4,7 +4,7 @@ title:  "LVS是什么鬼"
 categories: linux
 disqus: true
 image:
-    teaser: teaser/suo.jpg
+    teaser: teaser/lvs-architecture.jpg
 ---
 
 ##背景
@@ -70,3 +70,8 @@ UDP DNS，NTP，ICP，视频、音频流播放协议等 )
 5.软件许可证：GPL(GNU Public License)方式发行
 {% endraw %}
 {% endhighlight %}
+
+##参考文档
+
+[LVS英文站点](http://www.linuxvirtualserver.org/)
+[LVS手册](http://zh.linuxvirtualserver.org/handbooks)
