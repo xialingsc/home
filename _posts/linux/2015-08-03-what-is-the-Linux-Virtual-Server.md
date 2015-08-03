@@ -45,8 +45,8 @@ IPVS 八种负载调度算法：
 (6)带复制的基于局部性最少链接(Locality-Based Least Connections with Replication):与LBLC算法的不同之处是它要维护从一个目标IP地址到一组服务器的映射
 (7)目标地址散列(Destination Hashing):根据请求的目标IP地址，作为散列键从静态分配的散列表找出对应服务器
 (8)源地址散列(Source Hashing):根据请求的源IP地址，作为散列键从静态分配的散列表找出对应的服务器
-{% endhighlight %}
 {% endraw %}
+{% endhighlight %}
 
 2.基于内容请求分发的内核Layer-7交换机KTCPVS
 
