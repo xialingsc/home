@@ -178,6 +178,8 @@ service httpd stop 停止服务
 ##参考文档
 
 [linux(ubuntu 14.04)编译安装apache](http://blog.csdn.net/ejc2001/article/details/24765355)
+
 [apache安装过程中的错误](http://blog.chinaunix.net/uid-20765335-id-1850491.html)
+
 [安装apache可能遇到的问题](http://dinghaoliang.blog.163.com/blog/static/12654071420097254115963/)
 
