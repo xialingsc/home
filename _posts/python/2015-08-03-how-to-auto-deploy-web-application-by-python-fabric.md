@@ -24,7 +24,9 @@ image:
 ##运行环境
 
 系统:Ubuntu 12.04
+
 Shell:z-shell
+
 Web容器：tomcat
 
 ---
