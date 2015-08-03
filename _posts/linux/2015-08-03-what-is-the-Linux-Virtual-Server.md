@@ -47,8 +47,11 @@ IPVS 八种负载调度算法：
 (2)加权轮叫(Weighted Round Robin)：询问真实服务器负载情况，动态调整权值，能者多劳
 (3)最少链接(Least Connections)：给链接数最小的
 (4)加权最少链接(Weighted Least Connections)：
-(5)基于局部性的最少链接(Locality-Based Least Connections)：针对目标IP地址的负载均衡，主要用于Cache集群系统。该算法根据请求的目标IP地址找出该目标IP最近使用的服务器，若该服务器是可用的且没有超载，将请求发送给它；若服务器不存在，或者已超载且有服务器处于一半的工作负载，则用“最少链接”的原则
-(6)带复制的基于局部性最少链接(Locality-Based Least Connections with Replication):与LBLC算法的不同之处是它要维护从一个目标IP地址到一组服务器的映射
+(5)基于局部性的最少链接(Locality-Based Least Connections)：针对目标IP地址的负载均衡，主要用于Cache集群系统。
+该算法根据请求的目标IP地址找出该目标IP最近使用的服务器，若该服务器是可用的且没有超载，将请求发送给它;
+若服务器不存在，或者已超载且有服务器处于一半的工作负载，则用“最少链接”的原则
+(6)带复制的基于局部性最少链接(Locality-Based Least Connections with Replication):
+与LBLC算法的不同之处是它要维护从一个目标IP地址到一组服务器的映射
 (7)目标地址散列(Destination Hashing):根据请求的目标IP地址，作为散列键从静态分配的散列表找出对应服务器
 (8)源地址散列(Source Hashing):根据请求的源IP地址，作为散列键从静态分配的散列表找出对应的服务器
 {% endraw %}
@@ -66,7 +69,8 @@ IPVS 八种负载调度算法：
 {% highlight bash %}
 {% raw %}
 1.功能
-实现三种IP负载均衡技术和八种连接调度算法的IPVS软件，在IPVS内部，采用了高效的Hash函数和垃圾回收机制，能正确处理所调度报文相关的ICMP消息。虚拟服务的设置数目没有限制，每个虚拟服务有自己的服务器。
+实现三种IP负载均衡技术和八种连接调度算法的IPVS软件，在IPVS内部，采用了高效的Hash函数和垃圾回收机制，
+能正确处理所调度报文相关的ICMP消息。虚拟服务的设置数目没有限制，每个虚拟服务有自己的服务器。
 2.适用性
 可运行任何TCP/IP的操作系统，负载均衡绝大多数的TCP和UDP协议(TCP HTTP，FTP，PROXY，SMTP，POP3，IMAP4，DNS，LDAP，HTTPS，SSMTP等 
 UDP DNS，NTP，ICP，视频、音频流播放协议等 )
