@@ -7,9 +7,11 @@ image:
     teaser: teaser/lvs-architecture.jpg
 ---
 
-
->本文根据官方文档简要介绍了LVS技术的概念、内容、特点及相关调度算法，为进一步在实际场景下实践该技术作准备。
-
+{% highlight bash %}
+{% raw %}
+本文根据官方文档简要介绍了LVS技术的概念、内容、特点及相关调度算法，为进一步在实际场景下实践该技术作准备。
+{% endraw %}
+{% endhighlight %}
 
 ##背景
 
