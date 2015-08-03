@@ -75,7 +75,8 @@ sudo mkdir -p /opt/docker/registry/conf
 
 {% highlight bash %}
 {% raw %}
-sudo docker run -d -p 5000:5000 -v /opt/docker/registry/data:/tmp/registry-dev --name docker-registry registry:2.0.1
+sudo docker run -d -p 5000:5000 -v /opt/docker/registry/data:/tmp/registry-dev 
+--name docker-registry registry:2.0.1
 这里注意避免5000端口被占用而引起冲突,可以通过sudo docker ps 查看该容器是否已启动。接下来可以通过docker tag ,
 docker push进行简单测试，具体用法可以查询docker help tag和docker help push.
 {% endraw %}
@@ -85,7 +86,7 @@ docker push进行简单测试，具体用法可以查询docker help tag和docker
 
 {% highlight bash %}
 {% raw %}
-sudo openssl req -x509 -nodes -newkey rsa:2048  -keyout /opt/docker/registry/conf/docker-registry.key 
+sudo openssl req -x509 -nodes -newkey rsa:2048 -keyout /opt/docker/registry/conf/docker-registry.key 
 -out /opt/docker/registry/conf/docker-registry.crt
 这里一定要注意：创建证书的时候，可以接收所有默认，直到CN位置时，如果你是准备让外网访问，就需要外网的域名；
 如果是内网，可以输入运行私有仓库宿主机的别名。我们可以通过`ifconfig`查看ip,假定为10.10.62.103,通过
@@ -137,7 +138,8 @@ docker-registry.htpasswd:/etc/nginx/.htpasswd:ro -v /opt/docker/registry/conf:/e
 
 ###1.验证登录
 	
-	方法一：telnet 域名/别名 443。再输入docker login -u testu -p 密码 -e '' devregistry:443，出现login Sucessed，就OK了。
+	方法一：telnet 域名/别名 443。
+    再输入docker login -u testu -p 密码 -e '' devregistry:443，出现login Sucessed，就OK了。
 
 	方法二:打开浏览器，在地址栏中输入https://域名:443/v2,在接受安全警告后输入用户名/密码，可以在页面上看到{}
 	(方法二笔者未进行测试)
@@ -254,7 +256,6 @@ docker push devregistry:443/hello
 
 [部署 Docker Registry 服务](http://dockone.io/article/324)
 
-[把Docker升级到1.7.0版本](http://ju.outofmemory.cn/entry/188192)
 
 
 
