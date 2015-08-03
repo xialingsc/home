@@ -72,8 +72,8 @@ IPVS 八种负载调度算法：
 实现三种IP负载均衡技术和八种连接调度算法的IPVS软件，在IPVS内部，采用了高效的Hash函数和垃圾回收机制，
 能正确处理所调度报文相关的ICMP消息。虚拟服务的设置数目没有限制，每个虚拟服务有自己的服务器。
 2.适用性
-可运行任何TCP/IP的操作系统，负载均衡绝大多数的TCP和UDP协议(TCP HTTP，FTP，PROXY，SMTP，POP3，IMAP4，DNS，LDAP，HTTPS，SSMTP等 
-UDP DNS，NTP，ICP，视频、音频流播放协议等 )
+可运行任何TCP/IP的操作系统，负载均衡绝大多数的TCP和UDP协议(TCP HTTP，FTP，PROXY，SMTP，POP3，IMAP4，
+DNS，LDAP，HTTPS，SSMTP等 UDP DNS，NTP，ICP，视频、音频流播放协议等 )
 3.性能
 据说可支持几百万个并发链接。配置100M网卡，采用VS/TUN或VS/DR调度技术，集群系统吞吐量可高达1Gbits/s
 4.可靠性
