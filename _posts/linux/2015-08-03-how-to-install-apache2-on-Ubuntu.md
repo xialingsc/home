@@ -1,6 +1,6 @@
 ---
 layout: article
-title:  "LVS实践系列-在Ubuntu12.04环境下源码安装apache2"
+title:  "LVS实践系列(2)-在RealServer的Ubuntu12.04环境下源码安装apache2"
 categories: linux
 disqus: true
 image:

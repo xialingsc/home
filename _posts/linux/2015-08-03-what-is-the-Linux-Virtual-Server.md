@@ -1,6 +1,6 @@
 ---
 layout: article
-title:  "LVS实践系列-LVS是什么鬼"
+title:  "LVS实践系列(1)-LVS是什么鬼"
 categories: linux
 disqus: true
 image:
