@@ -129,6 +129,58 @@ cp /usr/local/keepalived/sbin/keepalived /usr/sbin/
 `service keepalived start|stop`
 
 
+##相关命令
+
+###1.ipvsadm相关命令
+
+{% highlight bash %}
+{% raw %}
+ipvsadm可以定义一个集群服务,定义realserver，同时对集群进行查看。
+a.定义集群服务
+添加或修改集群服务：ipvsadm -A|E -t|u|f VIP:port -s 调度算法
+    -A 添加一个新的集群服务
+    -E 修改一个服务
+    -t 基于tcp的集群服务
+    -u 基于udp的集群服务
+    -f 基于防火墙标记的集群服务
+    -s 指定调度算法 
+    -p 设定持久连接时间
+    -C 清空规则
+    -R 重新载入规则
+    -S 保存规则
+    
+删除一个集群服务：  ipvsadm -D -t|u|f VIP:port
+
+b.定义realserver
+添加或者修改REALSERVER:ipvsadm -a|e -t|u|f VIP:port -r REALSERVER[:port] -g|-i|-m [-w 权重]
+    -g LVS-DR直接路由模型
+    -i LVS-TUN隧道模型
+    -m LVS-NAT模型
+删除一个REALSERVER:    ipvsadm -d -t|u|f VIP:port -r REALSERVER[:port]
+
+c.集群查看
+
+ipvsadm -L/l -n 查看
+ipvsadm -lcn 查看持久连接状态
+{% endraw %}
+{% endhighlight %}
+
+
+###2.其他相关命令
+
+{% highlight bash %}
+{% raw %}
+添加/删除默认网关sudo route add/delete default gw 192.168.1.XXX
+增加/删除网关sudo route add/del 192.168.1.XXX
+增加子网 route add -net 192.168.1.0 netmask 255.255.255.0 dev eth0
+增加子网 route delete -net 192.168.1.0 netmask 255.255.255.0  eth0
+查看路由 sudo route -n
+查看所有ip  sudo ip a
+解除绑定sudo ip -f inet addr delete 192.168.1.200/32 dev eth0
+跟踪访问 sudo traceroute
+8099端口监控 sudo tcpdum port 8099
+{% endraw %}
+{% endhighlight %}
 
 
 
