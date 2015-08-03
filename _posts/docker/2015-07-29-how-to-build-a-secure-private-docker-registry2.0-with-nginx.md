@@ -26,13 +26,13 @@ image:
 
 ##为什么要选择Nginx+Registry2.0
 
-在开发Docker Web容器管理控制平台过程中，Registry1.0、2.0两个版本均有使用，但2.0的速度比1.0快。从基础镜像大小及公司内外网络带宽情况考虑，结合Docker官网上推荐的方式，选定了Nginx+Registry2.0的技术方案。
+在开发容器相关产品过程中，Registry1.0、2.0两个版本均有使用，但2.0的速度比1.0快。从基础镜像大小及公司内外网络带宽情况考虑，结合Docker官网上推荐的方式，选定了Nginx+Registry2.0的技术方案。
 
 ---
 
 ##选择靠谱的参考资料
 
-为了构建安全私有仓库，先从Docker官网的[Delopying a registry server](https://docs.docker.com/registry/deploying/)和[Authentication](https://docs.docker.com/registry/authentication/)进行了学习，在实际操作过程中遇到一些问题(在[DockerOne](http://dockone.io/question/436)和[Docker官网](https://github.com/docker/docker-registry/issues/1023)的提问)后，又查找相关同行分享的搭建经验，咨询了多位Docker大咖后，结合国外同行一篇[文章](http://mpas.github.io/post/2015/06/docker-setup-registry/)的部分内容,完成了这个看上简单但非常糟心的任务。自己经历过的痛苦就尽量不要让别人去重复了，希望这篇文章是大家搭建过程中的靠谱资料。
+笔者先从Docker官网的[Delopying a registry server](https://docs.docker.com/registry/deploying/)和[Authentication](https://docs.docker.com/registry/authentication/)进行了学习，在实际操作过程中遇到一些问题(在[DockerOne](http://dockone.io/question/436)和[Docker官网](https://github.com/docker/docker-registry/issues/1023)的提问)后，又查按照同行分享的相关经验，结合国外同行一篇[文章](http://mpas.github.io/post/2015/06/docker-setup-registry/)的部分内容,完成了这个看上简单但非常糟心的任务。自己经历过的痛苦就尽量不要让别人去重复了，希望这篇文章是大家搭建过程中的靠谱资料。
 
 
 ---
@@ -170,7 +170,7 @@ docker-registry.htpasswd:/etc/nginx/.htpasswd:ro -v /opt/docker/registry/conf:/e
 /var/lib/boot2docker/下创建bootlocal.sh，增加如下内容：
 #!/bin/sh 
 cat /var/lib/boot2docker/docker-registry.crt | sudo tee -a /etc/ssl/certs/ca-certificates.crt
-这种做法目的确实能将docker-registry.crt的内容在boot2docker启动时自动添加到certificates.crt中，但重启docker或
+这种方式在boot2docker启动时确实能将docker-registry.crt的内容自动添加到certificates.crt中，但重启docker或
 boot2docker后，docker login devregistry:443仍然无法登录。
 {% endraw %}
 {% endhighlight %}
