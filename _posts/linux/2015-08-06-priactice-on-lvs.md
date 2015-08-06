@@ -4,7 +4,7 @@ title:  "LVS实践系列(2)-在ubuntu系统实践lvs"
 categories: linux
 disqus: true
 image:
-    teaser: teaser/apache.jpg
+    teaser: teaser/lvs-practice.jpg
 ---
 
 {% highlight bash %}
