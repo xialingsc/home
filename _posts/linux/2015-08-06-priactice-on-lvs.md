@@ -93,7 +93,8 @@ global_defs {
          }
     }
  }  
- 最后，登陆client(即192.168.1.66),通过curl http://192.168.1.200:8099 可以看到交替67或68的响应交替出现，恭喜你又成功了。
+ 最后，登陆client(即192.168.1.66),通过curl http://192.168.1.200:8099 可以看到交替67或68的响应交替
+ 出现，恭喜你又成功了。
 {% endraw %}
 {% endhighlight %}
 
@@ -136,7 +137,8 @@ echo "1" >/proc/sys/net/ipv4/conf/all/send_redirects
 echo "1" >/proc/sys/net/ipv4/conf/default/send_redirects
 echo "1" >/proc/sys/net/ipv4/conf/eth0/send_redirects
 /sbin/ipvsadm -ln
-最后，登陆client(即192.168.1.66),通过curl http://192.168.1.200:8099 可以看到交替67或68的响应交替出现，恭喜你成功了。
+最后，登陆client(即192.168.1.66),通过curl http://192.168.1.200:8099 可以看到交替67或68的响应交替
+出现，恭喜你成功了。
 {% endraw %}
 {% endhighlight %}
 
@@ -159,7 +161,9 @@ echo "1" >/proc/sys/net/ipv4/conf/eth0/send_redirects
 首先，在realserver(即192.168.1.67,192.168.1.68)上执行如下语句：
 sudo route add default gw 192.168.1.179
 sudo netstat -rn
-其次，在确保keepalived安装成功的前提下，修改/etc/keepalived/keepalived.conf如下，然后通过service keepalived start启动
+其次，在确保keepalived安装成功的前提下，修改/etc/keepalived/keepalived.conf如下，然后通过
+service keepalived start启动
+
 ! Configuration File for keepalived
 global_defs {
     notification_email {                                                                                             
@@ -213,7 +217,8 @@ virtual_server 172.20.10.200 8099 {
         }
     }
 }    
-最后，找一台172.10.20.200同网关的机器，访问http://172.10.20.200:8099可以看到交替67或68的响应交替出现，恭喜你成功了。
+最后，找一台172.10.20.200同网关的机器，访问http://172.10.20.200:8099可以看到交替67或68的响应交替出现
+，恭喜你成功了。
 
 {% endraw %}
 {% endhighlight %}
