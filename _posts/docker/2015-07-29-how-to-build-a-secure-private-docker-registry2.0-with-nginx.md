@@ -147,7 +147,8 @@ docker-registry.htpasswd:/etc/nginx/.htpasswd:ro -v /opt/docker/registry/conf:/e
 
 ###2.在客户端配置证书
 ##### Ubuntu Docker 客户端
-	(1)在hosts文件中加入devregistry并保存退出(上文已有描述，但这的确很重要)
+
+    (1)在hosts文件中加入devregistry并保存退出(上文已有描述，但这的确很重要)
 	sudo vi /etc/hosts
 	10.10.62.103 devregistry
 	
@@ -164,6 +165,7 @@ docker-registry.htpasswd:/etc/nginx/.htpasswd:ro -v /opt/docker/registry/conf:/e
 	
 
 ##### Mac Boot2docker 客户端
+
 (1)方法一
 {% highlight bash %}
 {% raw %}
