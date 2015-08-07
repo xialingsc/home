@@ -99,8 +99,9 @@ docker-registry.crt放在随后与docker-registry进行交互的装有Docker客�
 
 ###5.创建能够访问仓库的用户名和密码
 为了让允许的用户登录访问，需要利用htpasswd创建用户和密码，并存储于/opt/docker/registry/conf/docker-registry.htpasswd文件.
+
 (1)安装htpasswd
-如果该命令已安装，可以略过此步。否则利用如下命令进行安装
+如果该命令已安装，可以略过此步,否则利用如下命令进行安装
 
 `sudo yum install httpd-tools -y`
 
