@@ -32,7 +32,7 @@ Docker Registry2.0，同时也将搭建过程中遇到的一些问题进行总�
 
 ##选择靠谱的参考资料
 
-笔者先从Docker官网的[Delopying a registry server](https://docs.docker.com/registry/deploying/)和[Authentication](https://docs.docker.com/registry/authentication/)进行了学习，在实际操作过程中遇到一些问题(在[DockerOne](http://dockone.io/question/436)和[Docker官网](https://github.com/docker/docker-registry/issues/1023)的提问)后，又查按照同行分享的相关经验，结合国外同行一篇[文章](http://mpas.github.io/post/2015/06/docker-setup-registry/)的部分内容,完成了这个看上简单但非常糟心的任务。自己经历过的痛苦就尽量不要让别人去重复了，希望这篇文章是大家搭建过程中的靠谱资料。
+笔者先从Docker官网的[Delopying a registry server](https://docs.docker.com/registry/deploying/)和[Authentication](https://docs.docker.com/registry/authentication/)进行了学习，在实际操作过程中遇到一些问题(在[DockerOne](http://dockone.io/question/436)和[Docker官网](https://github.com/docker/docker-registry/issues/1023)的提问)后，又按照同行分享的相关经验，结合国外同行一篇[文章](http://mpas.github.io/post/2015/06/docker-setup-registry/)的部分内容,完成了这个看上简单但非常糟心的任务。自己经历过的痛苦就尽量不要让别人去重复了，希望这篇文章是大家搭建过程中的靠谱资料。
 
 
 ---
