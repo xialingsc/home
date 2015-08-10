@@ -9,9 +9,9 @@ image:
 
 {% highlight bash %}
 {% raw %}
-笔者刚学习Golang时，亲手搭建应用项目框架过程中，引入其他模块，总感觉有问题，
-对GOPATH比较困惑。后来在Ubuntu及Mac OS下分别使用Go后，对其有了较为深入理解。
-本文主要回顾了安装Go过程中的步骤、问题及解决办法，与大家一起分享。
+笔者刚学习Golang时，引入其他模块，总感觉有问题，对GOPATH比较困惑。
+后来在Ubuntu及Mac OS下分别使用Go后，对其有了较为深入理解。本文主要
+回顾了安装Go过程中的步骤、问题及解决办法，与大家一起分享。
 {% endraw %}
 {% endhighlight %} 
 
