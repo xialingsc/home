@@ -4,7 +4,7 @@ title:  "Golang学习系列(1)-那些简单的重要命令"
 categories: go
 disqus: true
 image:
-    teaser: teaser/beego-mysql.jpg
+    teaser: teaser/go-command.jpg
 ---
 
 {% highlight bash %}
