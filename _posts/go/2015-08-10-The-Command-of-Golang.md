@@ -1,6 +1,6 @@
 ---
 layout: article
-title:  "Golang学习系列(1)-那些简单的重要命令"
+title:  "Golang学习系列(1)-那些简单而重要的命令"
 categories: go
 disqus: true
 image:
