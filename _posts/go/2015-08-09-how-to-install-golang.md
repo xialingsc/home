@@ -9,8 +9,8 @@ image:
 
 {% highlight bash %}
 {% raw %}
-刚学习Golang时,对GOPATH比较困惑。后来在Ubuntu及Mac OS下分别使用Go后，对其有了较为深入理解。
-本文主要回顾了安装Go过程中的步骤、问题及解决办法，与大家一起分享。
+刚学习Golang时,笔者对GOPATH比较困惑，在Ubuntu及Mac OS下分别使用Go后，对其有了一些理解。
+本文主要回顾了安装Go过程中的步骤、问题及解决办法,博君一悦。
 {% endraw %}
 {% endhighlight %} 
 
