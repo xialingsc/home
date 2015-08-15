@@ -364,31 +364,6 @@ string  ""
 {% endraw %}
 {% endhighlight %}
 
-如何查看相应的package文档呢？
-
-如果是builtin包，可以执行go doc builtin;如果是http包，执行go doc net/http;
-
-查看某个包里面的函数，类似执行 godoc fmt Println,还可以查看相应代码 
-
-godoc -src fmt Println
-
-
-很棒的一点是，可以在终端执行godoc -http=:端口号，例如godoc -http=:8080 ,就可以在
-
-浏览器中敲入127.0.0.1:8080进行文档内容的查看。
-
-
-## 其他命令
-
-{% highlight bash %}
-{% raw %}
-go fix        用来修复以前老版本的代码到新版本
-go version    查看go当前的版本
-go env        查看当前go的环境变量
-go list       列出当前全部安装的package
-go run        编译并运行go语言程序
-{% endraw %}
-{% endhighlight %}
 
 
 
