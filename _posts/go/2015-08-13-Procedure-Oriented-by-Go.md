@@ -1,10 +1,10 @@
 ---
 layout: article
-title:  "Golang学习系列(2)-面向过程的函数编程"
+title:  "Golang学习系列(3)-面向过程的函数编程"
 categories: go
 disqus: true
 image:
-    teaser: teaser/GoogleGo.jpg
+    teaser: teaser/gophertraining.jpg
 ---
 
 {% highlight bash %}
