@@ -169,6 +169,9 @@ func classifier(items...interface{}){
     }
 }
 
+{% endraw %}
+{% endhighlight %}
+
 #### select 
 
 {% highlight bash %}
@@ -271,7 +274,7 @@ for循环中，有时还会用到goto语句进行跳转。
     return value1,value2
 }
 {% endraw %}
-{% endhightlight %}
+{% endhighlight %}
 
 如果只有一个返回值且不声明返回值变量，那么可以省略"包括返回值" 的括号，还可以直接写返回的类型；
 
@@ -390,8 +393,6 @@ func ReadWrite() bool {
 
 type typeName func(input1 inputType1,input2 inputType2 [,...]) (return1 returnType1 [,...])
 
-{% highlight bash %}
-{% raw %}
 
 {% highlight bash %}
 {% raw %}
