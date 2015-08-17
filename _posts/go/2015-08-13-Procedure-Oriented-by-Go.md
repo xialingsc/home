@@ -53,13 +53,7 @@ if optionalStatment1;booleanExpression1 {
 
 #### swtich
 
-Go语言中有两种类型的switch语句，表达式开关和类型开关，表达式开关在C、C++及Java中经常见到，
-
-但类型开关属于Go的专有。Go的swtich不会自上向下贯穿，即不必再每个case末尾添加一个break语句，
-
-注意啊，这里就比java等语言显得高明了许多，当然在需要的时候，可以通过显式地调用fallthrough
-
-语句来这样做。
+Go语言中有两种类型的switch语句，表达式开关和类型开关，表达式开关在C、C++及Java中经常见到，但类型开关属于Go的专有。Go的swtich不会自上向下贯穿，即不必再每个case末尾添加一个break语句，注意啊，这里就比java等语言显得高明了许多，当然在需要的时候，可以通过显式地调用fallthrough语句来这样做。
 
 (1)表达式开关
 
