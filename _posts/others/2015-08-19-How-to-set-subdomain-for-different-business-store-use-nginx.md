@@ -1,6 +1,6 @@
 ---
 layout: article
-title:  "如何利用Nginx实现同一商家不同门店的二级域名请求分发"
+title:  "利用Nginx实现同一商家不同门店的二级域名请求分发"
 categories: others
 disqus: true
 image:
