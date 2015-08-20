@@ -61,7 +61,7 @@ web服务器： apache-tomcat-6.0.44
 
 在$TOMCAT_HOME/webapps下创建zm目录及子目录a、b,同时在三个目录下创建内容不同的index.html文件,如图所示：
 
-![alt text](/images/teaser/file.png "文件图片")
+![alt text](../../images/teaser/file.png "文件图片")
 
 ### 配置/usr/local/nginx/conf/nginx.conf文件
 
@@ -95,14 +95,14 @@ server {
 ### 测试内容
 
 (1)访问a.nei.zm如图所示
-![alt text](/images/teaser/a-nei.png "a-nei.zm")
+![alt text](../../images/teaser/a-nei.png "a-nei.zm")
 
 
 (2)访问b.nei.zm如图所示
-![alt text](/images/teaser/b-nei.png "b-nei.zm")
+![alt text](../../images/teaser/b-nei.png "b-nei.zm")
 
 (2)访问www.nei.zm或nei.zm如图所示
-![alt text](/images/teaser/www-nei.png "www-nei.zm")
+![alt text](../../images/teaser/www-nei.png "www-nei.zm")
 
 
 
