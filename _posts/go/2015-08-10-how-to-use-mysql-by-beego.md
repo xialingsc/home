@@ -68,7 +68,8 @@ dbName := Cfg.String("db_name")
 
 maxIdleConn, _ := Cfg.Int("db_max_idle_conn")
 maxActiveConn, _ := Cfg.Int("db_max_open_conn")
-dbUrl := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8", dbUser, dbPwd, dbHost, dbPort, dbName) + "&loc=" + url.QueryEscape("Asia/shanghai")
+dbUrl := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8", dbUser, dbPwd, dbHost, dbPort, dbName) + 
+    "&loc=" + url.QueryEscape("Asia/shanghai")
 orm.RegisterDriver("mysql", orm.DR_MySQL)
 orm.RegisterDataBase("default", "mysql", dbUrl, maxIdleConn, maxActiveConn)
 #Cfg为beego.AppConfig变量
@@ -80,7 +81,8 @@ orm.RegisterDataBase("default", "mysql", dbUrl, maxIdleConn, maxActiveConn)
 {% highlight bash %}
 {% raw %}
 (1)定义一个结构体
-type UserInfo struct { //beego默认将其转为user_info表，也可根据实际情况改变，参看[模型定义](http://beego.me/docs/mvc/model/models.md)
+type UserInfo struct { 
+//beego默认将其转为user_info表，也可根据实际情况改变，参看[模型定义](http://beego.me/docs/mvc/model/models.md)
     Id int `orm:"pk:auto"` //主键自增
     Name string
     ...
@@ -141,7 +143,7 @@ o.Delete(user)
 
 ## Html Template中条件循环使用
 
-这里主要介绍golang在Html模板中的使用，下面均采用了实际代码，某些可能涉及到了本文未提及知识点。[官网资料](http://golang.org/pkg/text/template/)
+这里主要介绍golang在Html模板中的使用，下面均采用了实际代码，某些可能涉及到了本文未提及知识点。查看官网请戳[这里](http://golang.org/pkg/text/template/)
 
 ### 条件
 
@@ -159,15 +161,15 @@ o.Delete(user)
 {% highlight bash %}
 {% raw %}
 {{range .DeployList}}
-       <tr>
-       <td><input type="radio" value="{{.Id}}" name="template"></td>
-       <td style="text-align:left"><a href="javascript:inspect('{{.ContainerId}}')">{{substr .ContainerId 0 20}}...</a></td>
-       <td>{{.Name}} </td>
-       <td>{{.Dtype | DeployTypeValueTansferToChinese}} </td>
-       <td style="text-align:left">{{.Description}}</td>                                                                                                                     <td>{{.Time | TimeToDateStr}}</td>
-       <td>{{.User}}</td>
-       </tr>
-                                                                                                                                                                      {{end}}
+<tr>
+<td><input type="radio" value="{{.Id}}" name="template"></td>
+<td style="text-align:left"><a href="javascript:inspect('{{.ContainerId}}')">{{substr .ContainerId 0 20}}...</a></td>
+<td>{{.Name}} </td>
+<td>{{.Dtype | DeployTypeValueTansferToChinese}} </td>
+<td style="text-align:left">{{.Description}}</td>                                                                                                                     <td>{{.Time | TimeToDateStr}}</td>
+<td>{{.User}}</td>
+</tr>
+{{end}}
 {% endraw %}
 {% endhighlight %}
 
