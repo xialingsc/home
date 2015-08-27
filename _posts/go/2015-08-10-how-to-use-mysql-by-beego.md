@@ -139,6 +139,106 @@ o.Delete(user)
 {% endhighlight %}
 
 
+## Html Template中条件循环使用
+
+这里主要介绍golang在Html模板中的使用，下面均采用了实际代码，某些可能涉及到了本文未提及知识点。[官网资料](http://golang.org/pkg/text/template/)
+
+### 条件
+
+{% highlight bash %}
+{% raw %}
+{{if eq  "" .Container.Config.Domainname}}
+无
+{{else}}
+{{.Container.Config.Domainname}}
+{{end}}
+{% endraw %}
+{% endhighlight %}
+
+### 单层循环
+{% highlight bash %}
+{% raw %}
+{{range .DeployList}}
+       <tr>
+       <td><input type="radio" value="{{.Id}}" name="template"></td>
+       <td style="text-align:left"><a href="javascript:inspect('{{.ContainerId}}')">{{substr .ContainerId 0 20}}...</a></td>
+       <td>{{.Name}} </td>
+       <td>{{.Dtype | DeployTypeValueTansferToChinese}} </td>
+       <td style="text-align:left">{{.Description}}</td>                                                                                                                     <td>{{.Time | TimeToDateStr}}</td>
+       <td>{{.User}}</td>
+       </tr>
+                                                                                                                                                                      {{end}}
+{% endraw %}
+{% endhighlight %}
+
+### 多层循环
+
+取顶层变量时，需要加$
+
+{% highlight bash %}
+{% raw %}
+{{range .Category}}
+<tr>
+<th>{{.Id}}</th>
+<th>{{.Title}}</th>
+{{range $.ArticleZX}}
+<th>{{.Title}}</th>
+{{range $.ArticleNews}}
+<th><a href="/detail?id={{.Id}}">{{.Title}}</a></th>
+{{end}}
+{{end}}
+</tr>
+{{end}}
+{% endraw %}
+{% endhighlight %}
+
+
+### 循环中增加条件
+
+{% highlight bash %}
+{% raw %}
+{{$legth := len .Container.Config.Env }}
+{{if gt $legth 3}}
+{{range  $index,$element := .Container.Config.Env}}
+{{if eq $element "type=service"}}
+{{else if eq $element "type=unique"}}                   
+{{else}}
+{{$element}}
+{{end}}             
+{{end}}
+{{else}}
+无
+{{end}}
+{% endraw %}
+{% endhighlight %}
+
+
+等价写法
+
+{% highlight bash %}
+{% raw %}
+{{range  $index,$element := .Container.Config.Env}}
+{{if eq $index 0}}
+{{if eq $element "type=service"}}
+服务型
+{{else}}
+独立型
+{{end}}
+{{end}}                                                                                                                                                               
+{{end}}
+
+等价于
+
+{{ $type := index .Container.Config.Env 2}}
+{{if eq $type "type=service"}}
+服务型
+{{else}}
+独立型
+{{end}}
+
+{% endraw %}
+{% endhighlight %}
+
 ## 注意事项
 
 在将Go与Mysql进行结合运用的过程中，有一些细节需要注意，比如时间类型处置等问题。
