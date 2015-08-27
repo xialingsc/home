@@ -163,10 +163,12 @@ o.Delete(user)
 {{range .DeployList}}
 <tr>
 <td><input type="radio" value="{{.Id}}" name="template"></td>
-<td style="text-align:left"><a href="javascript:inspect('{{.ContainerId}}')">{{substr .ContainerId 0 20}}...</a></td>
+<td style="text-align:left">
+<a href="javascript:inspect('{{.ContainerId}}')">{{substr .ContainerId 0 20}}...</a></td>
 <td>{{.Name}} </td>
 <td>{{.Dtype | DeployTypeValueTansferToChinese}} </td>
-<td style="text-align:left">{{.Description}}</td>                                                                                                                     <td>{{.Time | TimeToDateStr}}</td>
+<td style="text-align:left">{{.Description}}</td>
+<td>{{.Time | TimeToDateStr}}</td>
 <td>{{.User}}</td>
 </tr>
 {{end}}
@@ -228,16 +230,13 @@ o.Delete(user)
 {{end}}
 {{end}}                                                                                                                                                               
 {{end}}
-
 等价于
-
 {{ $type := index .Container.Config.Env 2}}
 {{if eq $type "type=service"}}
 服务型
 {{else}}
 独立型
 {{end}}
-
 {% endraw %}
 {% endhighlight %}
 
