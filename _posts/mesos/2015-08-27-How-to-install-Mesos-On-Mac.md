@@ -9,7 +9,7 @@ image:
 
 {% highlight bash %}
 {% raw %}
-本文是记录在MacOs上安装Mesos的过程，主要参考资料来源于Apache官网，想看官网原文，猛戳[这里](http://mesos.apache.org/gettingstarted/).
+本文记录了在MacOs上安装Mesos的具体过程，主要参考资料来源于Apache官网..
 {% endraw %}
 {% endhighlight %} 
 
@@ -18,7 +18,11 @@ image:
 
 ## Mesos是什么"玩意儿"
 
+
+官网原文，猛戳[这里](http://mesos.apache.org/gettingstarted/).
+
 ### A distributed systems kernel
+
 {% highlight bash %}
 {% raw %}
 Mesos is built using the same principles as the Linux kernel, only at a different level of abstraction. The Mesos kernel runs on every machine and provides applications (e.g., Hadoop, Spark, Kafka, Elastic Search) with API’s for resource management and scheduling across entire datacenter and cloud environments.
