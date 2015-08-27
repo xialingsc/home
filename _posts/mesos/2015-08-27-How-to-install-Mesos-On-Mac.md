@@ -95,7 +95,7 @@ $ brew install autoconf automake libtool subversion maven
 ## 构建Mesos
 
 {% highlight bash %}
-{5 raw %}
+{% raw %}
 # Change working directory.
 $ cd mesos
 
@@ -111,7 +111,7 @@ $ ../configure
 $ make
 
 {% endraw %}
-{% endhighlight 5}
+{% endhighlight %}
 
 若想快速构建而减少日志输出，可以在make时增加参数-j <number of cores> V=0
 
