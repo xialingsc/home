@@ -53,17 +53,11 @@ Web UI for viewing cluster state
 我们可以看到，Mesos具有如下特点：
 
 - 可提供上万规模的运行节点
-
 - 采用ZooKeeper作为服务发现并实现主从式容错和扩容
-
 - 支持Docker容器
-
 - 任务与Linux容器是天然隔离的
-
 - 基于内存、CPU、硬盘、端口的多资源调度
-
 - 为开发类似新应用提供了Java、Python及C++接口
-
 - 提供web端集群状态查看视图
 
 ---
