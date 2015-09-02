@@ -146,6 +146,7 @@ docker-registry.htpasswd:/etc/nginx/.htpasswd:ro -v /opt/docker/registry/conf:/e
 	(方法二笔者未进行测试)
 
 ###2.在客户端配置证书
+
 ##### Ubuntu Docker 客户端
 
     (1)在hosts文件中加入devregistry并保存退出(上文已有描述，但这的确很重要)
