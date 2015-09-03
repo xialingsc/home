@@ -45,8 +45,8 @@ docker run --net="host" -p 5050:5050 -e "MESOS_HOSTNAME=${HOST_IP}" -e "MESOS_IP
 -e "MESOS_ZK=zk://${HOST_IP}:2181/mesos" -e "MESOS_PORT=5050" -e "MESOS_LOG_DIR=/var/log/mesos" \ 
 -e "MESOS_QUORUM=1" -e "MESOS_REGISTRY=in_memory" -e "MESOS_WORK_DIR=/var/lib/mesos" \ 
 -d garland/mesosphere-docker-mesos-master
-这里的含义是在后台运行一个由garland/mesosphere-docker-mesos-master镜像产生的网络模式为host方式的打开5050端口的容器，
-同时设置了8个环境变量
+这里的含义是在后台运行一个由garland/mesosphere-docker-mesos-master镜像产生的网络模式为host方式的打开5050端口
+的容器，同时设置了8个环境变量
 {% endraw %}
 {% endhighlight %}
 
@@ -65,10 +65,11 @@ docker run -d -p 8080:8080 garland/mesosphere-docker-marathon --master zk://${HO
 
 {% highlight bash %}
 {% raw %}
-docker run -d --name mesos_slave_1 --entrypoint="mesos-slave" -e "MESOS_MASTER=zk://${HOST_IP}:2181/mesos" \ 
--e "MESOS_LOG_DIR=/var/log/mesos" -e "MESOS_LOGGING_LEVEL=INFO" garland/mesosphere-docker-mesos-master:latest
-这里的含义是在后台运行一个由garland/mesosphere-docker-mesos-master镜像产生的名称为mesos_slave_1的容器，同时设置了
-3个环境变量。
+docker run -d --name mesos_slave_1 --entrypoint="mesos-slave" 
+-e "MESOS_MASTER=zk://${HOST_IP}:2181/mesos" -e "MESOS_LOG_DIR=/var/log/mesos" 
+-e "MESOS_LOGGING_LEVEL=INFO" garland/mesosphere-docker-mesos-master:latest
+这里的含义是在后台运行一个由garland/mesosphere-docker-mesos-master镜像产生的名称为mesos_slave_1的容器，
+同时设置了3个环境变量。
 {% endraw %}
 {% endhighlight %}
 
@@ -90,9 +91,9 @@ Marathon 可以部署长期运行的Job到Mesos slave容器上，从某种角度
 
 感谢原作者的分享，感谢译文者的付出，我仅是结合具体场景进行了实践和记录，让我们一起维护来学习吧，下一篇将会讲述多节点的Mesos集群部署过程。
 
-英文原文，猛戳[Deploy a Mesos Cluster with 7 Commands Using Docker](https://medium.com/@gargar454/deploy-a-mesos-cluster-with-7-commands-using-docker-57951e020586)
+英文原文，[Deploy a Mesos Cluster with 7 Commands Using Docker](https://medium.com/@gargar454/deploy-a-mesos-cluster-with-7-commands-using-docker-57951e020586)
 
-中文翻译，猛戳[通过Docker来部署Mesos集群](http://dockerone.com/article/136)
+中文翻译，[通过Docker来部署Mesos集群](http://dockerone.com/article/136)
 
 
 
