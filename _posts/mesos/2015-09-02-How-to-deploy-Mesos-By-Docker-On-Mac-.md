@@ -45,8 +45,8 @@ docker run --net="host" -p 5050:5050 -e "MESOS_HOSTNAME=${HOST_IP}" -e "MESOS_IP
 -e "MESOS_ZK=zk://${HOST_IP}:2181/mesos" -e "MESOS_PORT=5050" -e "MESOS_LOG_DIR=/var/log/mesos" \ 
 -e "MESOS_QUORUM=1" -e "MESOS_REGISTRY=in_memory" -e "MESOS_WORK_DIR=/var/lib/mesos" \ 
 -d garland/mesosphere-docker-mesos-master
-这里的含义是在后台运行一个由garland/mesosphere-docker-mesos-master镜像产生的网络模式为host方式的打开5050端口
-的容器，同时设置了8个环境变量
+这里的含义是在后台运行一个由garland/mesosphere-docker-mesos-master镜像产生的网络模式为host方式的
+打开5050端口的容器，同时设置了8个环境变量
 {% endraw %}
 {% endhighlight %}
 
