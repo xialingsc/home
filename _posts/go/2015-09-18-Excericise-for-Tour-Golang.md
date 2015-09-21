@@ -4,7 +4,7 @@ title:  "Golang学习系列(4)-Golang学习向导练习题"
 categories: go
 disqus: true
 image:
-    teaser: teaser/golang6.jpg
+    teaser: teaser/golang6.png
 ---
 
 {% highlight bash %}
