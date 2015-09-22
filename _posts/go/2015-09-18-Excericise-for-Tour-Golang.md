@@ -554,8 +554,219 @@ func main() {
 {% endraw %}
 {% endhighlight %}
 
+## Goroutines
+
+通过Go runtine管理的goroutine是一个轻量级的线程，通过go f(x,y,z)启动一个新的Go程，Goroutines在同样的地址空间运行，因此获取共用的内存时必须同步。sync是很有用的原生包。
+
+### channel
+
+channels是通过<-符号进行发送和接收值的管道类型，ch <- v表示发送v到channel ch;v := <-ch表示从ch接收并赋值给局部变量v,箭头表示了数据流的方向。同map与slice一样，channel必须在使用前通过make创建,即 ch := make(chan int)。默认情况下，发送和接收均是阻塞的直到另一端已经就绪。在没有明确的锁及条件变量情况下运行goruntine进行同步,下面channel常规使用示例：
+
+{% highlight bash %}
+{% raw %}
+package main
+
+import "fmt"
+
+func sum(a []int, c chan int) {
+    sum := 0
+    for _, v := range a {
+         sum += v
+    }
+   c <- sum // send sum to c
+}
+
+func main() {
+    a := []int{7, 2, 8, -9, 4, 0}
+
+    c := make(chan int)
+    go sum(a[:len(a)/2], c)
+    go sum(a[len(a)/2:], c)
+    x, y := <-c, <-c // receive from c
+
+    fmt.Println(x, y, x+y)
+}
+-----------------
+-5 17 12 //这是在tour.golang.org中执行的结果
+17 -5 12 //这是在自己本机执行的结果
+
+分析：主程序执行a，c声明后，开启第一个分支A和第二个分支B，主程序继续向下执行，发现准备接收c时，c目前为空，即阻塞进入等待；与此同时进行的分支A与分支B开始执行，返回了不同的c,这里有意思的是，同样的程序运行时出现了上述两种不一样的结果，自己感觉goruntine无法保证运行结果一致性与机器的运行速度有关。
+{% endraw %}
+{% endhighlight %}
 
 
+示例二
 
+{% highlight bash %}
+{% raw %}
+package main
+
+import (
+        "fmt"
+)
+
+var a string
+var c = make(chan int)
+
+func fun() {
+   c <- 0
+   a = "hello world"
+}
+
+func main() {
+   go fun()
+   fmt.Println(a)
+   <-c
+}
+---------------
+输出为空
+说明：主线在执行Print时，支线在执行`c <- 0`，所以a还是空的，打印是空.
+若将<-c 与 print打印互换，主线是阻塞状态，必须等管道c里有内容后才会继续执行,所以支线的`c <- 0`执行后，主线的`<-c`才会执行,主线`<-c`执行时，支线正在执行`a = "hello world"`然后主线就能正确打印出hello world了。
+{% endraw %}
+{% endhighlight %}
+
+
+使用缓存Buffer的格式，buffer的长度为make声明时的第二个初始化参数，ch := make(chan int, 100)。只有buffer被占满时，发送给buffer channel才会被阻塞；只有buffer是空时，接收才会被阻塞。
+{% highlight bash %}
+{% raw %}
+package main
+
+import "fmt"
+
+func main() {
+    ch := make(chan int, 2)
+    ch <- 1
+    ch <- 2
+    fmt.Println(<-ch)
+    fmt.Println("---分割线---")
+    fmt.Println(<-ch)
+}
+
+------------
+1
+---分割线---
+2
+{% endraw %}
+{% endhighlight %}
+
+发送者在表现没有值等待发送时可以关闭channel,接收者可以通过第二个标志符测试是否channel已经关闭，例如 v ,ok := <-ch;若没有更多的值被接收或者channel已经关闭，则ok为false.可以利用for i :=rang c 格式进行循环接收，直到c中没有需要再被传送的值了。只有发送者能关闭channel,接收者不能关闭，若发送过程中关闭channel，会引起一个恐慌panic。channel不想文件，通常情况下你不必关闭它，只有在接收者明确被告知不会有新值被传送时才与必要关闭，例如某个range循环结束。
+{% highlight bash %}
+{% raw %}
+package main
+
+import (
+    "fmt"
+)
+
+func fibonacci(n int, c chan int) {
+    x, y := 0, 1
+    for i := 0; i < n; i++ {
+        c <- x
+        x, y = y, x+y
+    }
+    close(c)
+}
+
+func main() {
+    c := make(chan int, 10)
+    go fibonacci(cap(c), c)
+    for i := range c {
+         fmt.Println(i)
+    }
+}
+
+-------------------
+0
+1
+1
+2
+3
+5
+8
+13
+21
+34
+
+
+{% endraw %}
+{% endhighlight %}
+
+
+### Select
+
+select让多个go程中的一个分支运行，并执行相关case.select 的 case 里的操作语句只能是【IO 操作】。如果多个都已准备就绪，将随机选择其一执行。
+{% highlight bash %}
+{% raw %}
+package main
+
+import (
+    "fmt"
+    "strconv"
+)
+
+func fibonacci(c, quit chan int) {
+     x, y := 0, 1
+     for {
+         fmt.Println("=========")
+         select {
+              case c <- x:
+                x, y = y, x+y
+              case <-quit:
+                fmt.Println("quit")
+                return
+         }
+    }
+}
+
+func main() {
+    c := make(chan int)
+    quit := make(chan int)
+    go func() {
+    for i := 0; i < 10; i++ {
+       fmt.Println("---i----" + strconv.Itoa(i))
+       fmt.Println(<-c)
+    }
+    quit <- 0
+    }()
+    fibonacci(c, quit)
+}
+
+-------------------
+=========
+---i----0
+0
+---i----1
+=========
+=========
+1
+---i----2
+1
+---i----3
+=========
+=========
+2
+---i----4
+3
+---i----5
+=========
+=========
+5
+---i----6
+8
+---i----7
+=========
+=========
+13
+---i----8
+21
+---i----9
+=========
+=========
+34
+quit
+
+执行过程说明:主程序执行到fib时，输出=========,遇到c<-x进入等待，分支程序输出---i---0,输出0,分支机构循环输出---i---1,遇到<-c进入等待，主程序结束第一次for循环执行输出=========,遇到c<-x赋值后继续执行，进入第二次for循环输出==========，此时分支程序获得c，输出1，分支程序循环输出---i---2...
+{% endraw %}
+{% endhighlight %}
 
 
