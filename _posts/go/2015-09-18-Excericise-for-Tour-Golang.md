@@ -9,7 +9,7 @@ image:
 
 {% highlight bash %}
 {% raw %}
-本文记录在tour.golang.org上练习的相关题目，希望能多多提高
+本文主要记录了在tour.golang.org上练习的相关题目，也学习了一些别的同学相关写法，今天将其总结下来，希望自己能多多提高
 {% endraw %}
 {% endhighlight %} 
 
