@@ -24,7 +24,7 @@ image:
 
 接下来就开始了跛脚英语的翻译阶段了，并非按原文一板一眼翻译的，但赋予了更多的感情色彩，请小伙伴忍住不要笑。
 
-上图展现了mesos的主要组成部分。Mesos 由一个 master daemon 和多个mesos application(也称为frameworks)组成，其中master daemon主要管理一个或多个承载节点运行的slave daemon,applications则负责在那些slaves上运行任务tasks。
+上图展现了mesos的主要组成部分。Mesos 由一个 master daemon 和多个mesos application(也称为frameworks)组成，其中master daemon主要管理一个或多个承载节点运行的slave daemon, applications则负责在那些slaves上运行任务tasks。
 
 Master 通过使用 resource offers 可更好实现跨应用细粒度资源共享，如 cpu、内存等。 master 根据相关指定的策略来决定分配多少资源给每一个framework ，如公平共享策略，或优先级策略。为了支持多样的策略， master采用热插拔的构件方式实现其架构模块，从而使其更易增加新的插件。
 
