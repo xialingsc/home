@@ -738,7 +738,6 @@ func main() {
 }
 
 -------------------
-/Users/xialing/go-test2/src/src  [/Users/xialing/go-test2/src]
 =========
 ---i----0
 0
@@ -818,4 +817,220 @@ main中执行fibonacci函数时候,select有收发管道数据，顺序执行cas
 执行`x, y = y, x+y`,输出1111111111后？
 {% endraw %}
 {% endhighlight %}
+
+select默认default分支示例
+{% highlight bash %}
+{% raw %}
+package main
+
+import (
+    "fmt"
+    "time"
+)
+
+func main() {
+    tick := time.Tick(100 * time.Millisecond)
+    boom := time.After(500 * time.Millisecond)
+    for {
+        select {
+            case <-tick:
+                fmt.Println("tick.")
+            case <-boom:
+                fmt.Println("BOOM!")
+                return
+            default:
+                fmt.Println("    .")
+                time.Sleep(50 * time.Millisecond)
+        }
+    }
+}
+---------------------
+    .
+    .
+tick.
+    .
+    .
+tick.
+    .
+    .
+tick.
+    .
+    .
+tick.
+    .
+    .
+BOOM!
+{% endraw %}
+{% endhighlight %}
+
+下面是练习啦,估计最开始看的较多同学都是晕的，尽管内容中表明了两个二叉树本质是不一样的，但是若从左侧遍历，结果会发现遍历结果是一致的，这就要求我们去实现一个遍历，并能够比较不同二叉树是否相同。看完我也很晕。后来仔细读提示，你会发现这四步中基本都提示到了，只要有二叉树的基础知识就行。
+{% highlight bash %}
+{% raw %}
+package main
+
+import (
+"golang.org/x/tour/tree"
+"fmt"
+)
+// Walk walks the tree t sending all values
+// from the tree to the channel ch.
+func Walk(t *tree.Tree, ch chan int){
+    _walk(t,ch)
+    close(ch)
+}
+func _walk(t *tree.Tree, ch chan int){
+    if t != nil {
+        _walk(t.Left, ch)
+        ch <- t.Value
+        _walk(t.Right, ch)
+   }
+}
+
+// Same determines whether the trees
+// t1 and t2 contain the same values.
+func Same(t1, t2 *tree.Tree) bool {
+       ch1 := make(chan int)
+       ch2 := make(chan int)
+       go Walk(t1,ch1)
+       go Walk(t2,ch2)
+       for i := range ch1 {
+               if i != <- ch2 {
+                      return false
+               }
+       }
+      return true
+}
+
+func main() {
+    var ch = make(chan int)
+    go Walk(tree.New(1),ch)
+    for v := range ch {
+          fmt.Println(v)
+    }
+    fmt.Println(Same(tree.New(1), tree.New(1)))
+    fmt.Println(Same(tree.New(1), tree.New(2)))
+}
+{% endraw %}
+{% endhighlight %}
+
+另一个练习是利用go程实现一个web爬虫程序，要求修改Crawl功能，获取URL的内容，并避免相同URL被执行两次(这个练习我当时并未吃透，将前辈们的答案放在这里，先Mark下吧)
+{% highlight bash %}
+{% raw %}
+
+tckage main
+
+import (
+    "fmt"
+    "sync"
+)
+        
+type Fetcher interface {
+// Fetch returns the body of URL and
+// a slice of URLs found on that page.
+Fetch(url string) (body string, urls []string, err error)
+}
+                    
+var store map[string]bool 
+var wg sync.WaitGroup
+                    
+func _crawl(url string, depth int, fetcher Fetcher, Results chan string, wg *sync.WaitGroup) {
+        defer wg.Done()
+                        
+        if depth <= 0 {
+               return
+        }
+                                        
+        if exists := store[url]; exists {
+               return
+        }
+                                                        
+        body, urls, err := fetcher.Fetch(url)
+         
+        if err != nil {
+                Results <- fmt.Sprintf("not found: %s", url)
+                return
+        }
+        store[url] = true
+         
+        Results <- fmt.Sprintf("found: %s %q", url, body)
+ 
+        for _, u := range urls {
+            wg.Add(1)
+            go _crawl(u, depth-1, fetcher, Results, wg)
+       }
+}
+                                                                                                                    
+// Crawl uses fetcher to recursively crawl
+// pages starting with url, to a maximum of depth.
+func Crawl(url string, depth int, fetcher Fetcher) {
+    Results := make(chan string)
+    wg.Add(1)
+    go _crawl(url, depth, fetcher, Results, &wg)
+    go func() {
+          wg.Wait()
+          close(Results)
+    }()
+    for r := range Results {
+          fmt.Println(r)
+    }
+}
+                                                                                                                                                                        
+func main() {
+    store = make(map[string]bool)
+    Crawl("http://golang.org/", 4, fetcher)
+}
+                                                                                                                                                                                
+// fakeFetcher is Fetcher that returns canned results.
+type fakeFetcher map[string]*fakeResult
+ 
+type fakeResult struct {
+    body string
+    urls []string
+}
+                                                                                                                                                                                        
+func (f fakeFetcher) Fetch(url string) (string, []string, error) {
+    if res, ok := f[url]; ok {
+    return res.body, res.urls, nil
+    }
+    return "", nil, fmt.Errorf("not found: %s", url)
+}
+ 
+// fetcher is a populated fakeFetcher.
+var fetcher = fakeFetcher{
+    "http://golang.org/": &fakeResult{
+    "The Go Programming Language",
+    []string{
+        "http://golang.org/pkg/",
+        "http://golang.org/cmd/",
+    },
+},
+"http://golang.org/pkg/": &fakeResult{
+    "Packages",
+    []string{
+        "http://golang.org/",
+        "http://golang.org/cmd/",
+        "http://golang.org/pkg/fmt/",
+        "http://golang.org/pkg/os/",
+    },
+},
+"http://golang.org/pkg/fmt/": &fakeResult{
+"Package fmt",
+[]string{
+    "http://golang.org/",
+    "http://golang.org/pkg/",
+    },
+},
+"http://golang.org/pkg/os/": &fakeResult{
+"Package os",
+[]string{
+    "http://golang.org/",
+    "http://golang.org/pkg/",
+    },
+},
+}
+
+
+{% endraw %}
+{% endhighlight %}
+
 
