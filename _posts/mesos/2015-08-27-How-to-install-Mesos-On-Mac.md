@@ -69,8 +69,8 @@ Web UI for viewing cluster state
 {% highlight bash %}
 {% raw %}
 普通用户
-wget http://www.apache.org/dist/mesos/0.23.0/mesos-0.23.0.tar.gz
-tar -zxf mesos-0.23.0.tar.gz
+wget http://www.apache.org/dist/mesos/0.22.1/mesos-0.22.1.tar.gz
+tar -zxf mesos-0.22.1.tar.gz
 
 高级用户
 git clone https://git-wip-us.apache.org/repos/asf/mesos.git
