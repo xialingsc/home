@@ -85,7 +85,7 @@ git clone https://git-wip-us.apache.org/repos/asf/mesos.git
 {% highlight bash %}
 {% raw %}
 
-install Command Line Tools.
+#install Command Line Tools.
 $ xcode-select --install
 
 # Install Homebrew.
