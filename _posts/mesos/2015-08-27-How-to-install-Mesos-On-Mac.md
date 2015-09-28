@@ -85,7 +85,7 @@ git clone https://git-wip-us.apache.org/repos/asf/mesos.git
 {% highlight bash %}
 {% raw %}
 
-nstall Command Line Tools.
+install Command Line Tools.
 $ xcode-select --install
 
 # Install Homebrew.
@@ -165,6 +165,11 @@ $ ./src/examples/python/test-framework 127.0.0.1:5050
 {% endhighlight %}
 
 
+## 后记
+
+在实践过程中，还需要将/var/lib/mesos的权限赋予当前用户，否则会出现“/var/lib/mesos/replicated_log/LOCK: Permission denied Failed to recover the log”，修改其权限的方式为:
+
+sudo chown `whoami` /var/lib/mesos
 
 
 
