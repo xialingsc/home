@@ -123,7 +123,8 @@ HOST github_work
     HostName github.com
     User git
     IdentityFile ~/.ssh/id_rsa_work
-这样的话,你就可以通过使用github.com别名github_work来明确说你要是使用id_rsa_work的SSH key来连接github，即使用工作账号进行操作
+这样的话,你就可以通过使用github.com别名github_work来明确说你要是使用id_rsa_work的SSH key来连接github，即使用
+工作账号进行操作
 #push到github上去
 $ git remote add origin git@github_work:xxxx/test.git
 $ git push origin master
