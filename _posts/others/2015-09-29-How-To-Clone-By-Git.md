@@ -4,7 +4,7 @@ title:  "如何在Ubuntu中获取现有git项目代码的操作步骤"
 categories: others
 disqus: true
 image:
-    teaser: teaser/gitlib.jpg
+    teaser: teaser/gitlab.jpg
 ---
 
 {% highlight bash %}
