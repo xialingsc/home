@@ -1,6 +1,6 @@
 ---
 layout: article
-title:  "如何利用Shell统计代码行数"
+title:  "如何利用Shell统计行数及获取代码"
 categories: shell
 disqus: true
 image:
