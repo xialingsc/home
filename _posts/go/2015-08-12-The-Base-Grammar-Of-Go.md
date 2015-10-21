@@ -47,11 +47,7 @@ func main(){
 {% endhighlight %}
 
 
-解释：Go是通过package进行组织的,每一个可独立运行的Go语言程序，必定包含一个package main.在这个main
-
-包中必定包含一个入口函数main，而这个函数没有参数，也没有返回值。Go语言天生支持UTF-8编码，任何字符
-
-都可以直接输出,还可以用UTF-8中的任何字符作为标识符。
+解释：Go是通过package进行组织的,每一个可独立运行的Go语言程序，必定包含一个package main.在这个main包中必定包含一个入口函数main，而这个函数没有参数，也没有返回值。Go语言天生支持UTF-8编码，任何字符都可以直接输出,还可以用UTF-8中的任何字符作为标识符。
 
 ---
 
@@ -242,9 +238,7 @@ fmt.Println("The last element of DobuleArray is %d:", dobuleArray[1][3])
 
 例如：buf := []byte{'a','b','c'}
 
-slice可以从一个数组或一个已存在的slice中再次声明，通过array[i:j]来获取，i为开始位置，j为结束位置
-
-但不包含array[j],长度为j-i
+slice可以从一个数组或一个已存在的slice中再次声明，通过array[i:j]来获取，i为开始位置，j为结束位置,但不包含array[j],长度为j-i
 
 {% highlight bash %}
 {% raw %}
@@ -288,9 +282,7 @@ sliceEven = append(sliceEven, 1, 2, 3, 4, 5)
 
 格式：map[keyType]valueType
 
-map的读取和设置与slice一样，通过key操作，只是slice的index是`int`类型，而map多了其他类型
-
-可以为int,string及所有定义了==与!=操作的类型
+map的读取和设置与slice一样，通过key操作，只是slice的index是`int`类型，而map多了其他类型,可以为int,string及所有定义了==与!=操作的类型
 
 //声明一个key是字符串，值为int的map,使用前必须使用make初始化
 
