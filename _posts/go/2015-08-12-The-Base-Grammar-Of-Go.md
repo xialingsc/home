@@ -107,9 +107,7 @@ Go语言中，布尔值的类型为bool,值为true或false ，默认为false。
 
 (1)整数类型
 
-整数类型分为无符号和带符号两种，Go同时支持int 和 uint两种，这两种类型长度相同，但具体长度取决于不同
-
-编译器的实现。
+整数类型分为无符号和带符号两种，Go同时支持int 和 uint两种，这两种类型长度相同，但具体长度取决于不同编译器的实现。
 
 整数类型分为：rune、int8、int16、int32、int64和byte、uint8、uint16、uint32、uint64
 
@@ -128,11 +126,11 @@ fmt.Printf("Value is : %v",c)
 
 ### 字符串
 
--Go中字符串都是采用UTF-8字符集编码，字符串是用一对双引号("")或反引号(``)来定义，类型为string
+- Go中字符串都是采用UTF-8字符集编码，字符串是用一对双引号("")或反引号(``)来定义，类型为string
 
 格式：var abcstr string = "abc"
 
--Go中字符串是不可变的，例如：abcstr[0] = 'c' 会编译报错。若真希望进行改变，则可实现为：
+- Go中字符串是不可变的，例如：abcstr[0] = 'c' 会编译报错。若真希望进行改变，则可实现为：
 
 newstr := []byte(abcstr) //将字符串abcstr转换为[]byte类型
 
@@ -142,9 +140,9 @@ abcstr1 := string(newstr)
 
 fmt.Println("%s \n",abcstr1)
 
--可用采用"+"操作符连接两个字符串
+- 可用采用"+"操作符连接两个字符串
 
--修改字符串还可用利用切片(后续会介绍)进行修改
+- 修改字符串还可用利用切片(后续会介绍)进行修改
 
 abcstr := "oldstr"
 
@@ -176,9 +174,7 @@ if err != nil {
 
 ### iota枚举
 
-Go中有一个关键字iota,主要用来声明enum的时候采用，默认开始值为0,每调用一次加1，若全新声明另
-
-一组enum(即一组新的const)，iota从0开始
+Go中有一个关键字iota,主要用来声明enum的时候采用，默认开始值为0,每调用一次加1，若全新声明另一组enum(即一组新的const)，iota从0开始
 
 {% highlight %}
 {% raw %}
@@ -353,31 +349,6 @@ bool    false
 string  ""
 {% endraw %}
 {% endhighlight %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
