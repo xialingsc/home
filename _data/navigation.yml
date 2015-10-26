@@ -1,7 +1,8 @@
 # Site navigation links
 
 - title: Home
-  url: /home/
+  #url: /home/
+  url: xialingsc.github.io
   excerpt:
   image:
 
