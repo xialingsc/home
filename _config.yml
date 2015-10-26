@@ -5,7 +5,7 @@ description: "记录那些技术与人文点滴-心向远方"
 logo: photo.jpg # 120x120 px default image used for Twitter summary card
 teaser: teaser/teaser.jpg # 400x250 px default teaser image used in image archive grid
 locale:
-url: xialingsc.github.io
+url: 
 
 default:                       
     -
