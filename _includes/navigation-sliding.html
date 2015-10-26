@@ -2,7 +2,9 @@
   <h5>{{ site.title }} <span>Table of Contents</span></h5>
   <ul class="menu-item">
     {% for link in site.data.navigation %}<li>
+      1111<p>--{{site.url}}</p>---222
       <a href="{{ site.url }}/{{ link.url }}">
+
         {% if link.image %}<img src="{{ site.url }}/home/images/{{ link.image }}" alt="teaser" class="teaser">{% endif %}
         <div class="title">{{ link.title }}</div>
         {% if link.excerpt %}<p class="excerpt">{{ link.excerpt }}</p>{% endif %}
