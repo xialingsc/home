@@ -159,6 +159,22 @@ abcstr := `muli
 {% endraw %}
 {% endhighlight %}
 
+string、rune及byte之间的关系
+{% highlight bash %}
+{% raw %}
+在Golang中，string底层是用byte数组存储的，而且不可改变。
+str := "go中国"
+fmt.Println(len(str)) //8,原因是一个中文字符是用3个字节存的
+而len(string(rune('中')))的结果为3
+若我们想得到"go中国"的长度为4，需要先转换为rune切片再使用内置的len函数
+fmt.Println(len([]rune(str))) //4
+
+这个例子说明：用string存储unicode，若含有中文，按下标是无法获取的，而只能
+得到一个byte,假若需要访问中文的话，还是需要用rune切片，才能按下标访问
+{% endraw %}
+{% endhighlight %}
+
+
 ### 错误类型
 
 Go中内置了一个error类型，专门来处理错误信息。Go中package还有一个包errors来处理错误。
