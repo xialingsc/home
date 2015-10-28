@@ -63,7 +63,7 @@ MAINFILE(.exe) (由go build MAINFILE.go产生)
 
 提高效率。更多的时候可以采用gofmt,同时增加-w的参数，否则格式化结果不会写入文件，例如：
 
-gofmt -w src 来格式真个项目。
+gofmt -w src 来格式整个项目。
 
 ---
 
