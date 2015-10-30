@@ -130,7 +130,6 @@ Marathon 在启动、停止、升级及扩展时会考虑依赖关系。依赖�
 
 在任务启动时，健康检查就会立即随之启动，但是会忽略初始故障gracePeriodSeconds。如果在maxConsecutiveFaliures之后任务还不在健康状态，该任务就会被强行终止。目前Marathon支持HTTP和TCP健康检查，其他选择仍在开发中。
 
-- 
 
 
 
