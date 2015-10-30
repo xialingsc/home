@@ -9,7 +9,8 @@ image:
 
 {% highlight bash %}
 {% raw %}
-本文主要简要描述marathon的简单示例和相关特性,为在Mesos中使用Docker做准备,行文内容是自己的翻译与中文版《Mesos 大数据资源调度与大规模容器运行最佳实践》结合。
+本文主要简要描述marathon的简单示例和相关特性,为在Mesos中使用Docker做准备,行文内容是自己的翻译与中文版
+《Mesos 大数据资源调度与大规模容器运行最佳实践》结合。
 {% endraw %}
 {% endhighlight %}
 
