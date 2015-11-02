@@ -92,6 +92,8 @@ cd ~/Software/Mesos/zookeeper-3.4.6/bin
 ./zkServer.sh start
 cd ~/Software/Mesos/marathon-0.8.0/bin/
 ./start --master  zk://127.0.0.1:2181/mesos --zk zk://localhost:2181/marathon
+然后在浏览器中输入http://127.0.0.1:5050后查mesos相关信息
+在新开的浏览器中输入http://127.0.0.1:8080端口查看marathon相关信息
 {% endraw %}
 {% endhighlight %}
 
