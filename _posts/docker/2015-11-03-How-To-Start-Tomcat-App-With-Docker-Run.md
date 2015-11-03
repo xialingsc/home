@@ -17,52 +17,37 @@ image:
 ---
 
 
-###下载基础镜像
-
+##### 下载基础镜像
 {% highlight bash %}
 {% raw %}
 docker pull ubuntu:14.04
 {% endraw %}
 {% endhighlight %}
----
-
-###创建容器
-
+##### 创建容器
 {% highlight bash %}
 {% raw %}
 docker pull ubuntu:14.04
 {% endraw %}
 {% endhighlight %}
----
-
-###启动容器
-
+##### 启动容器
 {% highlight bash %}
 {% raw %}
 docker start containerid
 {% endraw %}
 {% endhighlight %}
----
-
-###进入容器
-
+##### 进入容器
 {% highlight bash %}
 {% raw %}
 docker exec -it containerid /bin/bash
 {% endraw %}
 {% endhighlight %}
----
-###设置root密码
-
+##### 设置root密码
 {% highlight bash %}
 {% raw %}
 passwd root 
 {% endraw %}
 {% endhighlight %}
----
-
-###添加用户并赋予管理员权限
-
+##### 添加用户并赋予管理员权限
 {% highlight bash %}
 {% raw %}
 adduser xialingsc  
@@ -95,10 +80,7 @@ xialingsc     ALL=(ALL:ALL) ALL
 保存退出，xialingsc用户就拥有了root权限。
 {% endraw %}
 {% endhighlight %}
----
-
-###更换vi
-
+##### 更换vi
 {% highlight bash %}
 {% raw %}
 尽管默认vi中，vi 方向键乱码，delete键不能删除，但仍可通过如下方式解决
@@ -107,10 +89,7 @@ set backspace=2
 但想要设置高亮等特性，例如syn on 或者syntax on则出现语法错误
 {% endraw %}
 {% endhighlight %}
----
-
-###安装ssh服务
-
+##### 安装ssh服务
 {% highlight bash %}
 {% raw %}
 apt-get install openssh-server
@@ -155,12 +134,10 @@ docker run -i -t -d -p 50022:22 --name ubuntu-base ubuntu-gap:14.04 /usr/sbin/ss
 {% endhighlight %}
 
 若遇到“Host key verification failed”，可删掉“Offending RSA key in /Users/watsy/.ssh/known_hosts:n ”指定的第n行;
----
 
 接下来还可以更换zsh、修改字符集、Docker 容器时间不同步问题
 
-### 安装JDK
-
+##### 安装JDK
 {% highlight bash %}
 {% raw %}
 拷贝 jdk-6u45-linux-x64.bin
@@ -181,10 +158,7 @@ source .zshrc
 java -version
 {% endraw %}
 {% endhighlight %}
----
-
-###安装Tomcat
-
+##### 安装Tomcat
 {% highlight bash %}
 {% raw %}
 拷贝 scp -r xl@192.168.1.171:/home/xl/software/tomcat5.5/apache-tomcat-5.5.20 ./
@@ -208,28 +182,20 @@ source .zshrc
 
 这里还可以加入自己的相关项目文件，用于验证。
 
----
-
-### 提交容器为镜像
-
+##### 提交容器为镜像
 {% highlight bash %}
 {% raw %}
 docker commit -a xialingsc -m "create a base image for paper" containeid paper-image
 {% endraw %}
 {% endhighlight %}
----
-
-### 运行新容器
-
+##### 运行新容器
 {% highlight bash %}
 {% raw %}
 docker run -i -t -d -p 40022:22 -p 48080:8080   --name paper-slave paper-image:latest \ 
 /bin/sh -c "/root/software/apache-tomcat-5.5.20/bin/startup.sh && /usr/sbin/sshd -D"
 {% endraw %}
 {% endhighlight %}
----
-
-### 验证访问
+##### 验证访问
 
 这是我们可以在浏览器中敲入http://192.168.59.103:48080/test/ip.jsp进行访问了
 
