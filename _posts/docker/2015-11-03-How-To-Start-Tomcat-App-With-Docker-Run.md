@@ -4,7 +4,7 @@ title:  "如何在Mac上docker run时启动Tomcat项目"
 categories: docker
 disqus: true
 image:
-    teaser: teaser/docker-tomcat.jpeg
+    teaser: teaser/docker-tomcat.jpg
 ---
 
 {% highlight bash %}
