@@ -151,7 +151,7 @@ cd jdk1.6.0_45 检查
 配置JAVA_HOME
 vi .zshrc
 #增加
-export JAVA_HOME=/home/gap/software/jdk6/jdk1.6.0_45
+export JAVA_HOME=/home/xialingsc/software/jdk6/jdk1.6.0_45
 export PATH=$JAVA_HOME/bin:$PATH
 source .zshrc
 #验证
@@ -170,7 +170,7 @@ JAVA_OPTS="-Xms2048m -Xmx6144m -XX:PermSize=256M -XX:MaxNewSize=256M -XX:MaxPerm
 配置TOMCAT_HOME
 vi .zshrc
 #增加
-export TOMCAT_HOME=/home/gap/software/apache-tomcat-5.5.20
+export TOMCAT_HOME=/home/xialingsc/software/apache-tomcat-5.5.20
 export PATH=$TOMCAT_HOME/bin:$PATH
 source .zshrc
 {% endraw %}
