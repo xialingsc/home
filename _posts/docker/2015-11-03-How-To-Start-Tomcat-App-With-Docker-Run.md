@@ -10,7 +10,7 @@ image:
 {% highlight bash %}
 {% raw %}
 本文主要描述如何从基础镜像开始，逐步实现ssh安装、Jdk及Tomcat的安装，最终实现从镜像运行容器时，可以
-直接访问该容器内的Tomcat项目页面，为将该容器作为mesos-slave作准备。
+直接访问该容器内的Tomcat项目页面，为将该容器作为mesos-slave热身。
 {% endraw %}
 {% endhighlight %} 
 
@@ -80,7 +80,7 @@ xialingsc     ALL=(ALL:ALL) ALL
 保存退出，xialingsc用户就拥有了root权限。
 {% endraw %}
 {% endhighlight %}
-##### 更换vi
+##### 解决vi中的一点问题
 {% highlight bash %}
 {% raw %}
 尽管默认vi中，vi 方向键乱码，delete键不能删除，但仍可通过如下方式解决
