@@ -197,7 +197,7 @@ docker run -i -t -d -p 40022:22 -p 48080:8080   --name paper-slave paper-image:l
 {% endhighlight %}
 ##### 验证访问
 
-这是我们可以在浏览器中敲入http://192.168.59.103:48080/test/ip.jsp进行访问了
+这时我们可以在浏览器中敲入http://192.168.59.103:48080/test/ip.jsp进行访问了
 
 ![测试页面](../../images/teaser/ceshi.png "测试页面")
 
