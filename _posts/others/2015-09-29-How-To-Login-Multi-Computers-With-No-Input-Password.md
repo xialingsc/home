@@ -39,7 +39,7 @@ ssh-copy-id user@host
 
 ## 免去冗长的user@host
 
-在本地配置config文件，位于~/ssh/config，在该文件加入如下几行配置：
+在本地配置config文件，位于~/.ssh/config，在该文件加入如下几行配置：
 {% highlight bash %}
 {% raw %}
 host 67
