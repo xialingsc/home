@@ -4,7 +4,7 @@ title:  "在Marathon上运行Docker容器"
 categories: docker
 disqus: true
 image:
-    teaser: teaser/marathon-docker.jpg
+    teaser: teaser/docker-tomcat.jpg
 ---
 
 {% highlight bash %}
@@ -48,10 +48,10 @@ $ echo '5mins' > /etc/mesos-slave/executor_registration_timeout
 
 1.提前设置salve,增加marathon命令行参数--task_launch_timeout用于执行超时时间，单位为毫秒。
 
-###### 概述
+概述
 
 为了使用本地容器支持，在你应用定义json中添加一个容器域。
-{% highlight bash %}
+{% highlight %}
 {% raw %}
 {
     "container": {
@@ -80,17 +80,17 @@ $ echo '5mins' > /etc/mesos-slave/executor_registration_timeout
 
 为了方便，mesos sandbox的mount 点可以从环境变量通过$MESOS_SANDBOX来获得。
 
-###### 桥接网络模式(Bridged Networking Mode)
+桥接网络模式(Bridged Networking Mode)
 
 (需要Mesos 0.20.1及Marathon 0.7.1)
 
 桥接网络通过在Docker容器中绑定配置端口可以让程序运行更为简单。Marathon能够在Mesos和Docker中约束的主机端口设定的端口资源间的桥接缝隙。
 
-(1)动态端口映射
+动态端口映射
 
 下面是应用定义示例：
 
-{% highlight bash %}
+{% highlight %}
 {% raw %}
 {
     "id": "bridged-webapp",
@@ -136,11 +136,11 @@ $ echo '5mins' > /etc/mesos-slave/executor_registration_timeout
 
 "protocol"参数是可选的，默认为"tcp"
 
-(2)静态端口映射
+静态端口映射
 
 它也可以具体指定非0主机端口。当确定这么做时，应该确保目标端口在资源提供的范围内！mesos-salve默认的端口资源为[31000-32000].也可以设成[8000-9000]
 
-{% highlight bash %}
+{% highlight %}
 {% raw %}
 --resources="ports(*)[8000-9000,31000,32000]"
 {% endraw %}
@@ -148,103 +148,7 @@ $ echo '5mins' > /etc/mesos-slave/executor_registration_timeout
 
 可以看Docker如何处理网络部分的网络配置文档[Network configuration](http://docs.docker.com/engine/userguide/networking/)
 
-###### 使用Private Docker Repsitory
 
-这部分可以看私有仓库文档[private registry](https://mesosphere.github.io/marathon/docs/native-docker-private-registry.html)来了解如何用Marathon从一个私有仓库去初始化拉取镜像的。
-
-###### 高级用法
-
-1.强行拉取
-
-Marathon 0.8.2使用了mesos 0.22.0支持的一个选项即在运行每个任务前强行先拉取Docker。
-
-{% highlight bash %}
-{% raw %}
-{
-  "type": "DOCKER",
-  "docker": {
-    "image": "group/image",
-    "forcePullImage":true
-  }
-}
-{% endraw %}
-{% endhighlight %}
-
-2.命令vs 参数
-
-从0.7.0开始，在JSON应用中Marathon支持一个args参数。对于相同应用同时提供了cmd和args两个参数时，args是失效的。cmd是早先版本的使用方式(它的值经由Mesos进行封装，例如/bin/sh -c '${app.cmd}'). 而具化了命令的args就允许容器安全使用类似自定义的Docker的ENTRYPOINT参数。例如，可以在Dockerfile中使用ENTRYPOINT如下定义：
-{% highlight bash %}
-{% raw %}
-FORM busybox
-MAINTAINER support@mesosphere.io
-
-CMD ["inky"]
-ENTRYPOINT ["echo"]
-{% endraw %}
-{% endhighlight %}
-
-下面这段json 定义将下载"mesosphere/inky"Docker 容器 同时执行 echo hello:
-{% highlight bash %}
-{% raw %}
-{
-    "id": "inky",
-    "container": {
-        "docker": {
-            "image": "mesosphere/inky"
-         },
-         "type":"DOCKER",
-         "volumes": []
-     },
-     "args": ["hello"],
-     "cpus": 0.2,
-     "mem": 32.0,
-     "instances": 1
-}
-
-{% endraw %}
-{% endhighlight %}
-
-命名参数可以为连续数组，例如argc,argv
-{% highlight bash %}
-{% raw %}
-"args":[
-    "--name", "etcd0",
-    "--initial-cluster-state","new"
-]
-{% endraw %}
-{% endhighlight %}
-
-###### Privileged Mode 和Docker选项的随意性
-
-从0.7.6版本开始，Marathon对于Docker容器支持两个新的key:privileged和parameters. privileged 标志用来控制是否运行用户以特权模式运行容器。默认为false. parameters 对象是为了通过Mesos containerizer 执行docker run 命令而补充随意的命令行参数。注意，以这种方式传递参数不一定保证在未来得到支持，因为Mesos可能不总是经由CLI 与Docker进行交互。
-
-下面罗列了两个参数的使用方法
-{% highlight bash %}
-{% raw %}
-{
-    "id": "privileged-job",
-    "container": {
-        "docker": {
-            "image": "mesosphere/inky",
-            "privileged": true,
-            "parameters": [
-                {"key": "hostname","value": "a.corp.org"},
-                {"key": "volumes-from","value": "another-container"},
-                {"key": "lxc-conf","value": "..."},
-
-            ]
-         },
-         "type":"DOCKER",
-         "volumes": []
-     },
-     "args": ["hello"],
-     "cpus": 0.2,
-     "mem": 32.0,
-     "instances": 1
-}
-
-{% endraw %}
-{% endhighlight %}
 
 
 
