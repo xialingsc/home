@@ -124,7 +124,8 @@ cp -r elasticsearch-node1 elasticsearch-node2
 
 #### 将中文分词Jcseg插件加入到Elasticsearch
 
-1.jcseg分词安装
+##### jcseg分词安装
+
 {% highlight bash %}
 {% raw %}
 jcseg版本选择1.9.6
@@ -139,7 +140,7 @@ f. 配置 elasticsearch.yml 或者 mapping 来使用 jcseg 分词插件(或者�
 {% endraw %}
 {% endhighlight %}
 
-2.配置elasticsearch
+##### 配置elasticsearch
 
 建议git clone http://git.oschina.net/lionsoul/elasticsearch-jcseg
 
@@ -189,13 +190,13 @@ index:
 {% endraw %}
 {% endhighlight %} 
 
-3.建立索引
+##### 建立索引
 
 可以采用两种方法建立索引，索引名称可以自定义。
 一种是通过http://127.0.0.1:9200/_plugin/head/上web页面上创建索引
 另外一种方式可以在命令行中输入curl -XPUT http://127.0.0.1:9200/ceshi,或者curl -XPUT http://127.0.0.1:9200/blog，这样就建立ceshi及blog索引
 
-4.测试
+##### 测试
 
 在浏览器输入http://127.0.0.1:9200/blog/_analyze?analyzer=jcseg_complex&text=2008年奥运会,就可以看到拆分的效果了
 
@@ -204,13 +205,13 @@ index:
 在浏览器输入http://127.0.0.1:9200/ceshi/_analyze?analyzer=jcseg_complex&text=2008年奥运会,也可以得到以上效果
 
 
-5. 集群整体情况
+##### 集群整体情况
 
 
 ![all](../../images/teaser/multi-node-all.png "整体情况")
 
 
-6. 如何扩展词库
+##### 如何扩展词库
 
 
 jcseg可以自定义词库，在 lexicon 文件夹下,可以随便添加/删除/更改词库和词库内容,并且对词库进行了分类。
@@ -226,7 +227,7 @@ jcseg可以自定义词库，在 lexicon 文件夹下,可以随便添加/删除/
 找到对应的词库文件，使用文本编辑器打开（请将文本编辑器的编码设置为utf-8，通常高级的的编辑器会自动检测编码，如果打开乱码，就需要设置下），把新词作为一行加入即可，新词前后面不要留空格，（在加入前最好查找下，确认词库中是否已经包含该词）。
 
 
-7. 如何让jcseg重新加载更改的词库
+##### 如何让jcseg重新加载更改的词库
 
 让jcseg自动轮询检测词库更新并加载可以这么设置jcseg.properties
 
@@ -239,7 +240,7 @@ jcseg.properties 中 lexicon.polltime =60 #轮询时间为60，可以修改
 词库目录下有个 lex-autoload.todo 文件, 使用文本编辑器打开, 将你需要重新加载的词库名称一行一个写入即可, jcseg 会自动按照 lex-autoload.todo 最后修改时间来判断是否重新载 入给定的词库文件. 完成 lex-autoload.todo 里面的词库加载后, jcseg 会自动清空里面的内容, 你也可以通过查看里面的内容来断定 jcseg 是否完成了给定词库的加载工作
 
 
-8. jcseg提供词库管理工具
+##### jcseg提供词库管理工具
 
 
 jcseg 提供 了两个词库管理工具，分别为简繁体相互转换工具；词库合并工具。具体使用可以参考《Jcseg-开发帮助文档》
