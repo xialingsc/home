@@ -75,6 +75,10 @@ HOST github_work
 #push到github上去
 $ git remote add origin git@github_work:xxxx/test.git
 $ git push origin master
+
+这里需要注意下,origin是git@github_work:xxxx/test.git的别名
+我们完全可以这么提交 git push git@github_work:xxxx/test.git master
+
 {% endraw %}
 {% endhighlight %}
 
