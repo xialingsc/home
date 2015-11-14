@@ -9,7 +9,7 @@ image:
 
 {% highlight bash %}
 {% raw %}
-本文将描述通过Mesos 0.20.0内嵌对docker的支持如何在Marathon上运行Docker容器，官网原文请见底部描述戳.
+本文将描述通过Mesos 0.20.0内嵌对docker的支持如何在Marathon上运行Docker容器，官网原文请见底部描述.
 {% endraw %}
 {% endhighlight %} 
 
