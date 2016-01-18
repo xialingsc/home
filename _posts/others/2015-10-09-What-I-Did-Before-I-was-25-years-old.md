@@ -1,7 +1,7 @@
 ---
 layout: article
 title:  "25岁之前我都干了点啥"
-categories: others
+categories: hidden-others
 disqus: true
 image:
     teaser: teaser/lu.jpg
